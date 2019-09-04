@@ -180,4 +180,8 @@ public:
 
     // 値の設定
     void set(float inX, float inY, float inZ, float inW);
+    
+    // グラスマン積
+    static Quaternion concatenate(const Quaternion& q,
+                                  const Quaternion& p);
 };

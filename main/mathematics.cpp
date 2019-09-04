@@ -462,3 +462,24 @@ void Quaternion::set(float inX, float inY, float inZ, float inW)
     z = inZ;
     w = inW;
 }
+
+Quaternion Quaternion::concatenate(const Quaternion& q,
+                                   const Quaternion& p)
+{
+    Quaternion quaternion;
+
+    Vector3 qVec(q.x, q.y, q.z);
+    Vector3 pVec(p.x, p.y, p.z);
+
+    Vector3 temp = p.w * qVec + 
+                   q.w * pVec + 
+                   Vector3::cross(pVec, qVec);
+
+    quaternion.x = temp.x;
+    quaternion.y = temp.y;
+    quaternion.z = temp.z;
+
+    quaternion.w = p.w * q.w - Vector3::dot(pVec, qVec);
+
+    return quaternion;
+}
