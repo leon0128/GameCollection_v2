@@ -449,6 +449,12 @@ Matrix4 operator*(const Matrix4& lhs,
     }
 }
 
+Matrix4& Matrix4::operator*=(const Matrix4& rhs)
+{
+    *this = *this * rhs;
+    return *this;
+}
+
 Quaternion::Quaternion():
     x(0.0f),
     y(0.0f),
