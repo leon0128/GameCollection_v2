@@ -91,3 +91,16 @@ void Actor::updateComponents(float deltaTime)
     for(auto& component : mComponents)
         component->update(deltaTime);
 }
+
+void Actor::computeWorldTransform()
+{
+    // 再計算が必要な場合のみ実行
+    if(mIsRecomputedWorldTransform)
+    {
+        mWorldTransform  = Matrix4::createScale(mScale);
+        mWorldTransform *= Matrix4::createFromQuaternion(mRotation);
+        mWorldTransform *= Matrix4::createTranslation(mPosition);
+
+        mIsRecomputedWorldTransform = false;
+    }
+}
