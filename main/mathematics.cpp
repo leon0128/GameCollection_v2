@@ -428,6 +428,27 @@ Matrix4 Matrix4::createSimpleViewProjection(float width, float height)
     return outMatrix;
 }
 
+Matrix4 operator*(const Matrix4& lhs,
+                  const Matrix4& rhs)
+{
+    Matrix4 outMatrix;
+    int size = 4;
+    
+    for(int row = 0; row < size; row++)
+    {
+        for(int column = 0; column < size; column++)
+        {
+            float element = 0.0f;
+            for(int i = 0; i < size; i++)
+            {
+                element += lhs.mat[row][i] *
+                           rhs.mat[i][column];
+            }
+            outMatrix.mat[row][column] = element;
+        }
+    }
+}
+
 Quaternion::Quaternion():
     x(0.0f),
     y(0.0f),

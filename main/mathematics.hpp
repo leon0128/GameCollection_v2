@@ -160,6 +160,11 @@ public:
     static Matrix4 createTranslation(const Vector3& translation);
     // 2次元のワールド空間からクリップ空間への変換行列
     static Matrix4 createSimpleViewProjection(float width, float height);
+
+    // 演算
+    friend Matrix4 operator*(const Matrix4& lhs,
+                             const Matrix4& rhs);
+    Matrix4& operator*=(const Matrix4& rhs);
 };
 
 class Quaternion
