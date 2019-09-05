@@ -29,3 +29,46 @@ void Controller::addActor(Actor* actor)
     else
         mPendingActors.emplace_back(actor);
 }
+
+void Controller::removeActor(Actor* actor)
+{
+    // mActors 内の調査
+    auto actIter = mActors.begin();
+    for(;
+        actIter != mActors.end();
+        actIter++)
+    {
+        if(actor == *actIter)
+            break;
+    }
+    // mActos に対象のActor が存在するなら削除
+    if(actIter != mActors.end())
+    {    
+        mActors.erase(actIter);
+        return;
+    }
+
+    // mPendingActors 内を調査
+    auto pendActIter = mPendingActors.begin();
+    for(;
+        pendActIter != mPendingActors.end();
+        pendActIter++)
+    {
+        if(actor == *pendActIter)
+            break;
+    }
+    // mPendingActors 内に対象のActor が存在するなら削除
+    if(pendActIter != mPendingActors.end())
+    {
+        mPendingActors.erase(pendActIter);
+        return;
+    }
+
+    // 削除するActorが見つからなかった場合、警告文の出力
+    if(actIter == mActors.end() &&
+       pendActIter == mPendingActors.end())
+    {
+        SDL_Log("Actor to delete was not found: %s",
+                __PRETTY_FUNCTION__);
+    }
+}
