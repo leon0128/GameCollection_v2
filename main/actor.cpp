@@ -32,3 +32,23 @@ void Actor::update(float deltaTime)
         computeWorldTransform();
     }
 }
+
+void Actor::addComponent(Component* component)
+{
+    // 変数の設定
+    int order = component->getOrder();
+    auto iterator = mComponents.begin();
+
+    // 挿入する場所の調査
+    for(;
+        iterator != mComponents.end();
+        iterator++)
+    {
+        if(order < (*iterator)->getOrder())
+            break;
+    }
+
+    // 挿入
+    mComponents.insert(iterator,
+                       component);
+}
