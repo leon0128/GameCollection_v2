@@ -44,12 +44,12 @@ private:
     std::vector<class Component*> mComponents; // 自身の所有するComponent
 
     class Controller* mController; // Controller クラス
-    EState mState; // 状態
-    Matrix4 mWorldTransform; // ワールド空間への座標変換を行う
-    Vector3 mPosition; // Actor の中心座標
-    Quaternion mRotation; // 回転Quaternion
-    float mScale; // 大きさ(1.0f で100%)
-    float mClear; // 透明度(1.0f で100%)
+    EState mState;                 // 状態
+    Matrix4 mWorldTransform;       // ワールド空間への座標変換を行う
+    Vector3 mPosition;             // Actor の中心座標
+    Quaternion mRotation;          // 回転Quaternion
+    float mScale;                  // 大きさ(1.0f で100%)
+    float mClear;                  // 透明度(1.0f で100%)
 
     bool mIsRecomputedWorldTransform; // mWorldTransform を再計算するか
 };
