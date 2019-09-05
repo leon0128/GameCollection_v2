@@ -1,11 +1,6 @@
 #pragma once
 
-// 自作
-#include "input_system.hpp"
-#include "renderer.hpp"
-// SDL/openGL 関連
 #include <SDL2/SDL.h>
-// C, C++
 
 class Game
 {
@@ -32,8 +27,9 @@ private:
     void output();
 
     // 各機能
-    InputSystem* mInputSystem; // 入力関連を処理するクラス
-    Renderer* mRenderer;       // 描画関連を処理するクラス
+    class InputSystem* mInputSystem; // 入力関連を処理するクラス
+    class Controller* mController;   // ゲーム内オブジェクトを処理するクラス
+    class Renderer* mRenderer;       // 描画関連を処理するクラス
 
     // フラグ
     bool mIsLoop; // ゲームを続けるか

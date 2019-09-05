@@ -1,7 +1,11 @@
 #include "game.hpp"
+#include "input_system.hpp"
+#include "controller.hpp"
+#include "renderer.hpp"
 
 Game::Game():
     mInputSystem(nullptr),
+    mController(nullptr),
     mRenderer(nullptr),
     mIsLoop(true)
 {
@@ -22,6 +26,14 @@ bool Game::initialize()
     if(!mInputSystem->initialize())
     {
         SDL_Log("Failed to initialize InputSystem");
+        return false;
+    }
+
+    // mController の設定
+    mController = new Controller(this);
+    if(!mController->initialize())
+    {
+        SDL_Log("Failed to initialize Controller");
         return false;
     }
 
@@ -52,6 +64,9 @@ void Game::finalize()
     mRenderer->finalize();
     delete mRenderer;
 
+    // mController の削除
+    delete mController;
+
     // mInputSystem の削除
     delete mInputSystem;
 
@@ -65,7 +80,7 @@ void Game::input()
 
 void Game::update()
 {
-
+    mController->update();
 }
 
 void Game::output()
