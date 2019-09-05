@@ -32,8 +32,9 @@ public:
 
 private:
     // update() で呼び出す
-    float controllTime();  // 時間制御
-    void controllActor(); // 各ゲーム、モードの主要Actorの作成
+    float controllTime();              // 時間制御
+    void controllActor();              // 各ゲーム、モードの主要Actorの作成
+    void updateActor(float deltaTime); // Actor の更新
 
     std::vector<class Actor*> mActors;        // Actor
     std::vector<class Actor*> mPendingActors; // Actor更新中に一時的に格納される

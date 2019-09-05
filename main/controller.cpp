@@ -30,7 +30,8 @@ void Controller::update()
     if(mIsResetActor)
         controllActor();
 
-    
+    // Actor の更新
+    void updateActor(deltaTime);
 }
 
 void Controller::addActor(Actor* actor)
@@ -128,4 +129,28 @@ void Controller::controllActor()
             break;
         }
     }
+}
+
+void Controller::updateActor(float deltaTime)
+{
+    // mActors の更新
+    mIsUpdatingActor = true;
+    for(size_t i = 0; i < mActors.size(); i++)
+        mActors.at(i)->update(deltaTime);
+    mIsUpdatingActor = false;
+
+    // mPendingActor内の要素をmActorsに移動
+    for(size_t i = 0; i < mPendingActors.size(); i++)
+        mActors.emplace_back(mPendingActors.at(i));
+    mPendingActors.clear();
+
+    // Actor::mState == Actor::DEAD の削除
+    std::vector<Actor*> deadActors;
+    for(size_t i = 0; i < mActors.size(); i++)
+    {
+        if(mActors.at(i)->getState() == Actor::DEAD)
+            deadActors.emplace_back(mActors.at(i));
+    }
+    for(size_t i = 0; i < deadActors.size(); i++)
+        delete deadActors.at(i);
 }
