@@ -33,8 +33,8 @@ protected:
     void clearComponent();
 
     // update() で呼び出す
-    void updateComponents(float deltaTime);        // mComponentsの更新
-    virtual void updateActor(float deltaTime) = 0; // 固有の更新
+    void updateComponents(float deltaTime);      // mComponentsの更新
+    virtual void updateActor(float deltaTime){}; // 固有の更新
 
 private:
     // メンバ変数
