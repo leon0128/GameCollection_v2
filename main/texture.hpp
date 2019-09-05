@@ -16,7 +16,7 @@ public:
     bool load(const std::string& filename);
     void unload();
     // SDL_Surfase から Texture の作成
-    void createFromSurface(SDL_Surface* surface);
+    void loadFromSurface(SDL_Surface* surface);
 
     // Texture の有効化
     void setActive();
@@ -29,6 +29,8 @@ private:
     bool loadImage(const std::string& filename,
                    unsigned char* image,
                    int* format);
+    void loadFromImage(unsigned char* image,
+                       int* format);
 
     GLuint mID;    // Texture の openGL ID
     Vector2 mSize; // Texture の大きさ 
