@@ -108,10 +108,10 @@ void Controller::controllActor()
     mIsResetActor = false;
 
     // 現在存在するActorの削除
-    for(size_t i = 0; i < mActors.size(); i++)
-        mActors.at(i)->setState(Actor::DEAD);
-    for(size_t i = 0; i < mPendingActors.size(); i++)
-        mPendingActors.at(i)->setState(Actor::DEAD);
+    for(auto& actor : mActors)
+        actor->setState(Actor::DEAD);
+    for(auto& actor : mPendingActors)
+        actor->setState(Actor::DEAD);
 
     // mState に応じて作成するActorの設定
     switch(mState)
@@ -135,22 +135,22 @@ void Controller::updateActor(float deltaTime)
 {
     // mActors の更新
     mIsUpdatingActor = true;
-    for(size_t i = 0; i < mActors.size(); i++)
-        mActors.at(i)->update(deltaTime);
+    for(auto& actor : mActors)
+        actor->update(deltaTime);
     mIsUpdatingActor = false;
 
     // mPendingActor内の要素をmActorsに移動
-    for(size_t i = 0; i < mPendingActors.size(); i++)
-        mActors.emplace_back(mPendingActors.at(i));
+    for(auto& actor : mPendingActors)
+        mActors.emplace_back(actor);
     mPendingActors.clear();
 
     // Actor::mState == Actor::DEAD の削除
     std::vector<Actor*> deadActors;
-    for(size_t i = 0; i < mActors.size(); i++)
+    for(auto& actor : mActors)
     {
-        if(mActors.at(i)->getState() == Actor::DEAD)
-            deadActors.emplace_back(mActors.at(i));
+        if(actor->getState() == Actor::DEAD)
+            deadActors.emplace_back(actor);
     }
-    for(size_t i = 0; i < deadActors.size(); i++)
-        delete deadActors.at(i);
+    for(auto& actor : deadActors)
+        delete actor;
 }
