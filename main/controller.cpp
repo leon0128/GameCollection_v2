@@ -7,6 +7,8 @@ Controller::Controller(Game* game):
     mPendingActors(),
     mGame(game),
     mLastTicks(0),
+    mState(TITLE),
+    mIsResetActor(true),
     mIsUpdatingActor(false)
 {
 }
@@ -21,7 +23,14 @@ bool Controller::initialize()
 
 void Controller::update()
 {
+    // 時間制御
+    float deltaTime = controllTime();
 
+    // Actor の作成
+    if(mIsResetActor)
+        controllActor();
+
+    
 }
 
 void Controller::addActor(Actor* actor)
@@ -91,4 +100,32 @@ float Controller::controllTime()
     mLastTicks = SDL_GetTicks();
 
     return deltaTime;
+}
+
+void Controller::controllActor()
+{
+    mIsResetActor = false;
+
+    // 現在存在するActorの削除
+    for(size_t i = 0; i < mActors.size(); i++)
+        mActors.at(i)->setState(Actor::DEAD);
+    for(size_t i = 0; i < mPendingActors.size(); i++)
+        mPendingActors.at(i)->setState(Actor::DEAD);
+
+    // mState に応じて作成するActorの設定
+    switch(mState)
+    {
+        case(TITLE):
+        {
+            break;
+        }
+        case(SELECT):
+        {
+            break;
+        }
+        case(_2048):
+        {
+            break;
+        }
+    }
 }

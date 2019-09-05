@@ -6,9 +6,9 @@ class Game
 {
 public:
     // 定数
-    static const float SCREEN_WIDTH = 1024.0f; // 幅
-    static const float SCREEN_HEIGHT = 768.0f; // 高さ
-    static const float FRAME_RATE = 60.0f;     // フレームレート
+    static const float SCREEN_WIDTH;  // 幅
+    static const float SCREEN_HEIGHT; // 高さ
+    static const float FRAME_RATE;    // フレームレート
 
     Game();
     ~Game(){}

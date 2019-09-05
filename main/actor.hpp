@@ -24,6 +24,10 @@ public:
     void addComponent(class Component* component);
     void removeComponent(class Component* component);
 
+    // メンバ変数の設定、取得
+    void setState(EState state){mState = state;}
+    EState getState() const {return mState;}
+
 protected:
     // mComponentsを空にする
     void clearComponent();
