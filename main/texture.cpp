@@ -15,10 +15,16 @@ bool Texture::load(const std::string& filename)
     bool isSuccessful = loadImage(filename,
                                   image,
                                   &format);
-    if(!isSuccessful)
+    if(!loadImage(filename,
+                  image,
+                  &format))
+    {
         return false;
+    }
 
-
+    // 画像をopenGLに渡す
+    loadFromImage(image,
+                  &format);
 
     return true;
 }
