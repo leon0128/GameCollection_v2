@@ -31,7 +31,7 @@ void Controller::update()
         controllActor();
 
     // Actor の更新
-    void updateActor(deltaTime);
+    updateActor(deltaTime);
 }
 
 void Controller::addActor(Actor* actor)
