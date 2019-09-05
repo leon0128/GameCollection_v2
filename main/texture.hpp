@@ -10,7 +10,7 @@ class Texture
 {
 public:
     Texture();
-    ~Texture();
+    ~Texture(){};
 
     // テクスチャをopenGLにロード、アンロード
     bool load(const std::string& filename);
@@ -25,6 +25,11 @@ public:
     const Vector2& getSize() const {return mSize;}
 
 private:
+    // load() で呼び出す
+    bool loadImage(const std::string& filename,
+                   unsigned char* image,
+                   int* format);
+
     GLuint mID;    // Texture の openGL ID
     Vector2 mSize; // Texture の大きさ 
 };
