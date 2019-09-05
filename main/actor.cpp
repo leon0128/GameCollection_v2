@@ -52,3 +52,28 @@ void Actor::addComponent(Component* component)
     mComponents.insert(iterator,
                        component);
 }
+
+void Actor::removeComponent(Component* component)
+{
+    auto iterator = mComponents.begin();
+
+    // 削除対象の捜査
+    for(;
+        iterator != mComponents.end();
+        iterator++)
+    {
+        if(*iterator == component)
+            break;
+    }
+
+    // 削除するか警告文を表示
+    if(iterator != mComponents.end())
+    {
+        mComponents.erase(iterator);
+    }
+    else
+    {
+        SDL_Log("Component to delete was not found: %s",
+                __PRETTY_FUNCTION__);
+    }
+}
