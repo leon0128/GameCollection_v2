@@ -85,3 +85,9 @@ void Actor::clearComponent()
         delete component;
     mComponents.clear();
 }
+
+void Actor::updateComponents(float deltaTime)
+{
+    for(auto& component : mComponents)
+        component->update(deltaTime);
+}
