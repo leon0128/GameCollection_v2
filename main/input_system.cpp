@@ -42,7 +42,7 @@ void InputSystem::updateKeyboardState()
     const Uint8* state = SDL_GetKeyboardState(&size);
 
     // キーボードの大きさが変更された場合は、mKeyboardState の再設定
-    if(size != mKeyboardState.size())
+    if(size != static_cast<int>(mKeyboardState.size()))
     {
         mKeyboardState.clear();
         mKeyboardState.resize(size);
