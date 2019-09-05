@@ -69,6 +69,7 @@ void Actor::removeComponent(Component* component)
     // 削除するか警告文を表示
     if(iterator != mComponents.end())
     {
+        delete *iterator;
         mComponents.erase(iterator);
     }
     else
@@ -76,4 +77,11 @@ void Actor::removeComponent(Component* component)
         SDL_Log("Component to delete was not found: %s",
                 __PRETTY_FUNCTION__);
     }
+}
+
+void Actor::clearComponent()
+{
+    for(auto& component : mComponents)
+        delete component;
+    mComponents.clear();
 }
