@@ -37,8 +37,8 @@ bool Renderer::initialize()
     mWindow = SDL_CreateWindow("Game",
                                SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED,
-                               (int)mGame->SCREEN_WIDTH,
-                               (int)mGame->SCREEN_HEIGHT,
+                               (int)Game::SCREEN_WIDTH,
+                               (int)Game::SCREEN_HEIGHT,
                                SDL_WINDOW_OPENGL);
     if(!mWindow)
     {

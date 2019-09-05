@@ -13,6 +13,9 @@ Controller::Controller(Game* game):
 
 bool Controller::initialize()
 {
+    // mLastTicks の設定
+    mLastTicks = SDL_GetTicks();
+
     return true;
 }
 
@@ -71,4 +74,21 @@ void Controller::removeActor(Actor* actor)
         SDL_Log("Actor to delete was not found: %s",
                 __PRETTY_FUNCTION__);
     }
+}
+
+float Controller::controllTime()
+{
+    // フレームレート管理
+    while(!SDL_TICKS_PASSED(SDL_GetTicks(),
+                            mLastTicks + 1000 / Game::FRAME_RATE));
+
+    // deltaTime の設定
+    float deltaTime = (SDL_GetTicks() - mLastTicks) / 1000.0f;
+    if(deltaTime > 3.0f / Game::FRAME_RATE)
+        deltaTime = 3.0f / Game::FRAME_RATE;
+
+    // mLastTicks の更新
+    mLastTicks = SDL_GetTicks();
+
+    return deltaTime;
 }
