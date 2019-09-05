@@ -1,5 +1,6 @@
 #include "actor.hpp"
 #include "controller.hpp"
+#include "../component/component.hpp"
 
 Actor::Actor(Controller* controller):
     mComponents(),
@@ -18,4 +19,16 @@ Actor::Actor(Controller* controller):
 Actor::~Actor()
 {
     mController->removeActor(this);
+}
+
+void Actor::update(float deltaTime)
+{
+    // mState == ACTIVE なら更新
+    if(mState == ACTIVE)
+    {
+        computeWorldTransform();
+        updateComponents(deltaTime);
+        updateActor(deltaTime);
+        computeWorldTransform();
+    }
 }
