@@ -36,6 +36,13 @@ bool Shader::load(const std::string& vertexShaderName,
     return true;
 }
 
+void Shader::unload() const
+{
+    glDeleteProgram(mShaderProgramID);
+    glDeleteShader(mVertexShaderID);
+    glDeleteShader(mFragmentShaderID);
+}
+
 bool Shader::compile(const std::string& filename,
                      GLenum type,
                      GLuint& outShader)
