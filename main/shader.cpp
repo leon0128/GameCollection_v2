@@ -48,6 +48,20 @@ void Shader::setActive() const
     glUseProgram(mShaderProgramID);
 }
 
+void Shader::setMatrix4Uniform(const char* uniformName,
+                               const Matrix4& matrix) const
+{
+    // shader 内の uniform の捜査
+    GLuint location = glGetUniformLocation(mShaderProgramID,
+                                           uniformName);
+    
+    // 行列データを uniform に設定
+    glUniformMatrix4fv(location,
+                       1,
+                       GL_TRUE,
+                       matrix.getAsFloatPointer());
+}
+
 bool Shader::compile(const std::string& filename,
                      GLenum type,
                      GLuint& outShader)
