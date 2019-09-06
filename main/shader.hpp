@@ -16,7 +16,7 @@ public:
     // 第二引数はフラグメントシェーダーのファイル名
     bool load(const std::string& vertexShaderName,
               const std::string& indexShaderName);
-    void unload();
+    void unload() const;
 
     // シェーダーの有効化
     void setActive() const;

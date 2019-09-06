@@ -43,6 +43,11 @@ void Shader::unload() const
     glDeleteShader(mFragmentShaderID);
 }
 
+void Shader::setActive() const
+{
+    glUseProgram(mShaderProgramID);
+}
+
 bool Shader::compile(const std::string& filename,
                      GLenum type,
                      GLuint& outShader)
