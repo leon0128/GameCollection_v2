@@ -16,11 +16,11 @@ public:
     ~VertexArray();
 
     // 有効化
-    void setActive();
+    void setActive() const;
 
 private:
     // コンストラクタで呼び出す
-    void enableAttribute();
+    void enableAttribute() const;
 
     // メンバ変数
     unsigned int mNumVertices; // 頂点配列の要素数

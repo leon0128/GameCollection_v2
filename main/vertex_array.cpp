@@ -50,12 +50,12 @@ VertexArray::~VertexArray()
                          &mVertexArrayID);
 }
 
-void VertexArray::setActive()
+void VertexArray::setActive() const
 {
     glBindVertexArray(mVertexArrayID);
 }
 
-void VertexArray::enableAttribute()
+void VertexArray::enableAttribute() const
 {
     // 頂点属性 0 (位置座標: float * 3)
     glEnableVertexAttribArray(0);
