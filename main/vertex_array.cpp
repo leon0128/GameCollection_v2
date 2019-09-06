@@ -54,3 +54,33 @@ void VertexArray::setActive()
 {
     glBindVertexArray(mVertexArrayID);
 }
+
+void VertexArray::enableAttribute()
+{
+    // 頂点属性 0 (位置座標: float * 3)
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          0);
+    
+    // 頂点属性 1 (法線ベクトル: float * 3)
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          reinterpret_cast<void*>(sizeof(float) * 3));
+
+    // 頂点属性 2 (テクスチャ座標: float * 2)
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(float) * 8,
+                          reinterpret_cast<void*>(sizeof(float) * 6));
+}
