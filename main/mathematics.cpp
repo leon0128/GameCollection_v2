@@ -447,6 +447,8 @@ Matrix4 operator*(const Matrix4& lhs,
             outMatrix.mat[row][column] = element;
         }
     }
+
+    return outMatrix;
 }
 
 Matrix4& Matrix4::operator*=(const Matrix4& rhs)

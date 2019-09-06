@@ -12,9 +12,6 @@ bool Texture::load(const std::string& filename)
     int format = 0;
 
     // 画像のロード
-    bool isSuccessful = loadImage(filename,
-                                  image,
-                                  &format);
     if(!loadImage(filename,
                   image,
                   &format))
