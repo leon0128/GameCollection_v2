@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 class Shader
 {

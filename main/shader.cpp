@@ -35,3 +35,40 @@ bool Shader::load(const std::string& vertexShaderName,
 
     return true;
 }
+
+bool Shader::compile(const std::string& filename,
+                     GLenum type,
+                     GLuint& outShader)
+{
+    // ファイルを開く
+    std::ifstream shaderFile(filename);
+    if(!shaderFile.is_open())
+    {
+        SDL_Log("Cannot open shader file: %s",
+                filename.c_str());
+        return false;
+    }
+
+    // ファイルテキストを const char* として読み込む
+    std::stringstream sstream;
+    sstream << shaderFile.rdbuf();
+    const char* contents = sstream.str().c_str();
+
+    // シェーダー作成
+    outShader = glCreateShader(type);
+
+    // コンパイル
+    glShaderSource(outShader,
+                   1,
+                   &(contents),
+                   nullptr);
+    glCompileShader(outShader);
+    if(!isCompiled(outShader))
+    {
+        SDL_Log("Failed to compile shader: %s",
+                filename.c_str());
+        return false;
+    }
+
+    return true;
+}
