@@ -69,6 +69,12 @@ void Texture::loadFromSurface(SDL_Surface* surface)
     SDL_FreeSurface(surface);
 }
 
+void Texture::setActive()
+{
+    glBindTexture(GL_TEXTURE_2D,
+                  mTextureID);
+}
+
 bool Texture::loadImage(const std::string& filename,
                         unsigned char* image,
                         int* format)
