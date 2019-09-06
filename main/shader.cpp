@@ -98,3 +98,30 @@ bool Shader::isCompiled(GLuint shader) const
 
     return true;
 }
+
+void Shader::isValidProgram() const
+{
+    GLint status; // コンパイルステータス
+
+    // リンク状況の問い合わせ
+    glGetProgramiv(mShaderProgramID,
+                   GL_LINK_STATUS,
+                   &status);
+
+    if(status != GL_TRUE)
+    {
+        char buffer[512] = "";
+        memset(buffer,
+               0,
+               512);
+        glGetProgramInfoLog(mShaderProgramID,
+                            511,
+                            nullptr,
+                            buffer);
+        SDL_Log("Failed to link GLSL: \n%s",
+                buffer);
+        return false;
+    }
+
+    return true;
+}
