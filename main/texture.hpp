@@ -32,6 +32,6 @@ private:
     void loadFromImage(unsigned char* image,
                        int* format);
 
-    GLuint mID;    // Texture の openGL ID
-    Vector2 mSize; // Texture の大きさ 
+    GLuint mTextureID; // Texture の openGL ID
+    Vector2 mSize;     // Texture の大きさ 
 };

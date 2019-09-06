@@ -1,7 +1,7 @@
 #include "texture.hpp"
 
 Texture::Texture():
-    mID(0),
+    mTextureID(0),
     mSize()
 {
 }
@@ -27,6 +27,12 @@ bool Texture::load(const std::string& filename)
                   &format);
 
     return true;
+}
+
+void Texture::unload()
+{
+    glDeleteTextures(1,
+                     &mTextureID);
 }
 
 bool Texture::loadImage(const std::string& filename,
@@ -63,9 +69,9 @@ void Texture::loadFromImage(unsigned char* image,
 {
     // openGL Texture オブジェクトを作成し、アクティブ化
     glGenTextures(1,
-                  &mID);
+                  &mTextureID);
     glBindTexture(GL_TEXTURE_2D,
-                  mID);
+                  mTextureID);
     
     // 画像データのコピー
     glTexImage2D(GL_TEXTURE_2D,
