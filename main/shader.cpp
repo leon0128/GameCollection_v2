@@ -72,3 +72,29 @@ bool Shader::compile(const std::string& filename,
 
     return true;
 }
+
+bool Shader::isCompiled(GLuint shader) const
+{
+    GLint status; // コンパイルステータス
+
+    // 問い合わせ
+    glGetShaderiv(shader,
+                  GL_COMPILE_STATUS,
+                  &status);
+    if(status != GL_TRUE)
+    {
+        char buffer[512] = "";
+        memset(buffer,
+               0,
+               512);
+        glGetShaderInfoLog(shader,
+                           511,
+                           nullptr,
+                           buffer);
+        SDL_Log("Failed to compile GLSL: \n%s",
+                buffer);
+        return false;
+    }
+
+    return true;
+}

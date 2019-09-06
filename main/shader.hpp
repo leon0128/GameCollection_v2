@@ -19,25 +19,25 @@ public:
     void unload();
 
     // シェーダーの有効化
-    void setActive();
+    void setActive() const;
 
     // シェーダープログラムの uniform に値の設定
     void setMatrix4Uniform(const char* uniformName,
-                           const Matrix4& matrix);
+                           const Matrix4& matrix) const;
     void setVector3Uniform(const char* uniformName,
-                           const Vector3& vector);
+                           const Vector3& vector) const;
     void setFloatUniform(const char* uniformName,
-                         float value);
+                         float value) const;
     void setColorUniform(const char* uniformName,
-                         const SDL_Color& color);
+                         const SDL_Color& color) const;
 
 private:
     // load() で実行
     bool compile(const std::string& filename, // ファイルからシェーダーをコンパイル
                  GLenum type,
                  GLuint& outShader);
-    bool isCompiled(GLuint shader);           // コンパイルができたかの確認
-    bool isValidProgram();                    // リンクが有効か
+    bool isCompiled(GLuint shader) const;     // コンパイルができたかの確認
+    bool isValidProgram(); const              // リンクが有効か
 
     // メンバ変数
     GLuint mVertexShaderID;   // 頂点シェーダーID
