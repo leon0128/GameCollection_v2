@@ -35,6 +35,40 @@ void Texture::unload()
                      &mTextureID);
 }
 
+void Texture::loadFromSurface(SDL_Surface* surface)
+{
+    // mSize の設定
+    mSize.x = surface->w;
+    mSize.y = surface->h;
+
+    // openGL Texture の作成
+    glGenTextures(1,
+                  &mTextureID);
+    glBindTexture(GL_TEXTURE_2D,
+                  mTextureID);
+    
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 GL_RGBA,
+                 mSize.x,
+                 mSize.y,
+                 0,
+                 GL_BGRA,
+                 GL_UNSIGNED_BYTE,
+                 surface->pixels);
+    
+    // バイリニアフィルタリングの有効化
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER,
+                    GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER,
+                    GL_LINEAR);
+    
+    // Surface の開放
+    SDL_FreeSurface(surface);
+}
+
 bool Texture::loadImage(const std::string& filename,
                         unsigned char* image,
                         int* format)
