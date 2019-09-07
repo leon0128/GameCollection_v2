@@ -71,5 +71,24 @@ void Renderer::finalize()
 
 void Renderer::draw()
 {
+    // カラーバッファの初期化
+    glClearColor(1.0f,
+                 1.0f,
+                 1.0f,
+                 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Sprite の描画
+    glDisable(GL_DEPTH_TEST); // 深度バッファ無効化
+    glEnable(GL_BLEND);       // アルファブレンド有効化
+    glBlendEquationSeparate(GL_FUNC_ADD,
+                            GL_FUNC_ADD);
+    glBlendFuncSeparate(GL_SRC_ALPHA,
+                        GL_ONE_MINUS_SRC_ALPHA,
+                        GL_ONE,
+                        GL_ZERO);
+
     
+    // バッファ入れ替え
+    SDL_GL_SwapWindow(mWindow);
 }
