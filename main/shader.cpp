@@ -62,6 +62,26 @@ void Shader::setMatrix4Uniform(const char* uniformName,
                        matrix.getAsFloatPointer());
 }
 
+void Shader::setVector3Uniform(const char* uniformName,
+                               const Vector3& vector) const
+{
+    GLuint location = glGetUniformLocation(mShaderProgramID,
+                                           uniformName);
+
+    glUniform3fv(location,
+                 1,
+                 vector.getAsFloatPointer());   
+}
+
+void Shader::setFloatUniform(const char* uniformName,
+                             float value) const
+{
+    GLuint location = glGetUniformLocation(mShaderProgramID,
+                                           uniformName);
+    glUniform1f(location,
+                value);
+}
+
 bool Shader::compile(const std::string& filename,
                      GLenum type,
                      GLuint& outShader)
@@ -125,7 +145,7 @@ bool Shader::isCompiled(GLuint shader) const
     return true;
 }
 
-void Shader::isValidProgram() const
+bool Shader::isValidProgram() const
 {
     GLint status; // コンパイルステータス
 

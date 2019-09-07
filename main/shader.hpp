@@ -38,7 +38,7 @@ private:
                  GLenum type,
                  GLuint& outShader);
     bool isCompiled(GLuint shader) const;     // コンパイルができたかの確認
-    bool isValidProgram(); const              // リンクが有効か
+    bool isValidProgram() const;              // リンクが有効か
 
     // メンバ変数
     GLuint mVertexShaderID;   // 頂点シェーダーID
