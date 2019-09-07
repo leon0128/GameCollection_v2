@@ -82,6 +82,18 @@ void Shader::setFloatUniform(const char* uniformName,
                 value);
 }
 
+void Shader::setColorUniform(const char* uniformName,
+                             const SDL_Color& color) const
+{
+    GLuint location = glGetUniformLocation(mShaderProgramID,
+                                           uniformName);
+    glUniform4f(location,
+                color.r / 255.0f,
+                color.g / 255.0f,
+                color.b / 255.0f,
+                color.a / 255.0f);
+}
+
 bool Shader::compile(const std::string& filename,
                      GLenum type,
                      GLuint& outShader)
