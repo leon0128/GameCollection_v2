@@ -7,7 +7,7 @@ class SpriteComponent : public Component
 {
 public:
     SpriteComponent(class Actor* actor,
-                    class Shader* shader,
+                    class Renderer* renderer,
                     int drawOrder = 100);
     virtual ~SpriteComponent();
 
@@ -15,10 +15,13 @@ public:
     virtual void draw() = 0;
 
 protected:
-    // draw() で呼び出す
+    // メンバ変数の設定、取得
     class Shader* getShader() const {return mShader;}
+    void setShader(class Shader* shader){mShader = shader;}
+    class Renderer* getRenderer() const {return mRenderer;}
 
 private:
+    class Renderer* mRenderer; // レンダラー
     class Shader* mShader;     // シェーダー
     int mDrawOrder;            // 描画優先度
     Vector2 mSize;             // 大きさ

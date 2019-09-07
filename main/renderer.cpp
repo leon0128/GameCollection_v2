@@ -1,6 +1,6 @@
 #include "renderer.hpp"
-
 #include "game.hpp"
+#include "../component/sprite_component.hpp"
 
 Renderer::Renderer(Game* game):
     mGame(game),
