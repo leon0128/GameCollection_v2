@@ -3,12 +3,10 @@
 // uniform
 uniform mat4 uWorldTransform; // ワールド変換行列
 uniform mat4 uViewProjection; // ビュー射影行列
-uniform float uAlpha; // 透明度
 
 // 入力
 layout(location = 0) in vec3 inPosition; // 頂点位置
 layout(location = 2) in vec2 inTexCoord; // テクスチャ座標
-
 // 出力
 out vec2 fragTexCoord; // テクスチャ座標
 
