@@ -16,5 +16,5 @@ void main()
                        fragTexCoord);
     
     // 透明度計算
-    outColor.w = outColor.w * uAlpha;
+    outColor.w *= uAlpha;
 }
