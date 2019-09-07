@@ -1,8 +1,10 @@
 #include "renderer.hpp"
 #include "game.hpp"
+#include "shader.hpp"
 #include "../component/sprite_component.hpp"
 
 Renderer::Renderer(Game* game):
+    mShaderMap(),
     mSprites(),
     mGame(game),
     mWindow(nullptr),
@@ -92,6 +94,21 @@ void Renderer::draw()
     
     // バッファ入れ替え
     SDL_GL_SwapWindow(mWindow);
+}
+
+Shader* Renderer::getShader(EShader shader)
+{
+    auto iterator = mShaderMap.find(shader);
+    if(iterator != mShaderMap.end())
+    {
+        return *iterator;
+    }
+    else
+    {
+        SDL_Log("Shader not found: %d",
+                shader);
+        return nullptr;
+    }
 }
 
 void Renderer::addSprite(SpriteComponent* sprite)
