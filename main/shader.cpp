@@ -48,50 +48,53 @@ void Shader::setActive() const
     glUseProgram(mShaderProgramID);
 }
 
-void Shader::setMatrix4Uniform(const char* uniformName,
-                               const Matrix4& matrix) const
+template<typename T>
+void Shader::setUniform(const char* name,
+                        EType type,
+                        const T& value) const
 {
     // shader 内の uniform の捜査
     GLuint location = glGetUniformLocation(mShaderProgramID,
-                                           uniformName);
-    
-    // 行列データを uniform に設定
-    glUniformMatrix4fv(location,
-                       1,
-                       GL_TRUE,
-                       matrix.getAsFloatPointer());
-}
+                                           name);
+    if(location == -1)
+    {
+        SDL_Log("The specified uniform cannot be found: %s",
+                name);
+        return;
+    }
 
-void Shader::setVector3Uniform(const char* uniformName,
-                               const Vector3& vector) const
-{
-    GLuint location = glGetUniformLocation(mShaderProgramID,
-                                           uniformName);
+    switch(type)
+    {
+        case(FLOAT):
+            glUniform1f(location,
+                        value);
+            break;
 
-    glUniform3fv(location,
-                 1,
-                 vector.getAsFloatPointer());   
-}
+        case(COLOR):
+            glUniform4f(location,
+                        value.r / 255.0f,
+                        value.g / 255.0f,
+                        value.b / 200.0f,
+                        value.a / 255.0f);
+            break;
 
-void Shader::setFloatUniform(const char* uniformName,
-                             float value) const
-{
-    GLuint location = glGetUniformLocation(mShaderProgramID,
-                                           uniformName);
-    glUniform1f(location,
-                value);
-}
+        case(VECTOR3):
+            glUniform3fv(location,
+                         1,
+                         value.getAsFloatPointer());
+            break;
 
-void Shader::setColorUniform(const char* uniformName,
-                             const SDL_Color& color) const
-{
-    GLuint location = glGetUniformLocation(mShaderProgramID,
-                                           uniformName);
-    glUniform4f(location,
-                color.r / 255.0f,
-                color.g / 255.0f,
-                color.b / 255.0f,
-                color.a / 255.0f);
+        case(MATRIX4):
+            glUniformMatrix4fv(location,
+                               1,
+                               GL_TRUE,
+                               value.getAsFloatPointer());
+            break;
+
+        default:
+            SDL_Log("Type not yet implemented: %d",
+                    type);
+    }
 }
 
 bool Shader::compile(const std::string& filename,

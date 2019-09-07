@@ -96,12 +96,12 @@ void Renderer::draw()
     SDL_GL_SwapWindow(mWindow);
 }
 
-Shader* Renderer::getShader(EShader shader)
+Shader* Renderer::getShader(EShader shader) const
 {
     auto iterator = mShaderMap.find(shader);
     if(iterator != mShaderMap.end())
     {
-        return *iterator;
+        return iterator->second;
     }
     else
     {

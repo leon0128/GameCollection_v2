@@ -10,6 +10,15 @@
 class Shader
 {
 public:
+    // uniform の型
+    enum EType
+    {
+        FLOAT,
+        COLOR,
+        VECTOR3,
+        MATRIX4
+    };
+
     Shader();
     ~Shader(){}
 
@@ -21,6 +30,12 @@ public:
 
     // シェーダーの有効化
     void setActive() const;
+
+    // uniform に値の設定
+    template<typename T>
+    void setUniform(const char* name,
+                    EType type,
+                    const T& value) const;
 
     // シェーダープログラムの uniform に値の設定
     void setMatrix4Uniform(const char* uniformName,
