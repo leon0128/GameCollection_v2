@@ -3,6 +3,7 @@
 #include "../component/sprite_component.hpp"
 
 Renderer::Renderer(Game* game):
+    mSprites(),
     mGame(game),
     mWindow(nullptr),
     mContext()
@@ -91,4 +92,47 @@ void Renderer::draw()
     
     // バッファ入れ替え
     SDL_GL_SwapWindow(mWindow);
+}
+
+void Renderer::addSprite(SpriteComponent* sprite)
+{
+    int order = sprite->getOrder();
+
+    // 挿入位置の捜査
+    auto iterator = mSprites.begin();
+    for(;
+        iterator != mSprites.end();
+        iterator++)
+    {
+        if(order < (*iterator)->getOrder())
+            break;
+    }
+
+    // 挿入
+    mSprites.insert(iterator,
+                    sprite);
+}
+
+void Renderer::removeSprite(SpriteComponent* sprite)
+{
+    // 対象の位置の捜査
+    auto iterator = mSprites.begin();
+    for(;
+        iterator != mSprites.end();
+        iterator++)
+    {
+        if(*iterator == sprite)
+            break;
+    }
+
+    // 要素の削除
+    if(iterator != mSprites.end())
+    {
+        mSprites.erase(iterator);
+    }
+    else
+    {
+        SDL_Log("The target for deletion was not found: %s",
+                __PRETTY_FUNCTION__);
+    }
 }

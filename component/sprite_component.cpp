@@ -18,5 +18,5 @@ SpriteComponent::SpriteComponent(Actor* actor,
 
 SpriteComponent::~SpriteComponent()
 {
-    mRenderer->removeSprite();
+    mRenderer->removeSprite(this);
 }
