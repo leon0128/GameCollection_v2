@@ -252,6 +252,15 @@ void Renderer::destroyTexture(const std::string& filename)
     }
 }
 
+void Renderer::destoryAllTexture()
+{
+    for(auto& texture : mTextureMap)
+    {
+        texture.second->unload();
+        delete texture.second;
+    }
+}
+
 bool Renderer::loadShaders()
 {
     if(!loadTextureShader())

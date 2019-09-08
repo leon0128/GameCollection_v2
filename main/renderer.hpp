@@ -37,6 +37,7 @@ public:
     // ゲーム切替時に Controller で呼び出す
     bool createTexture(const std::string& filename);
     void destroyTexture(const std::string& filename);
+    void destoryAllTexture();
 
 private:
     // initialize() で呼び出す
