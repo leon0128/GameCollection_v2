@@ -185,6 +185,28 @@ Texture* Renderer::getTexture(std::string& filename) const
     }
 }
 
+Texture* Renderer::getCharTexture(Font::ESize size,
+                                  char character) const
+{
+    auto outerIter = mCharTextureMap.find(size);
+    if(outerIter == mCharTextureMap.end())
+    {
+        SDL_Log("The font of the specified size has not been created: %d",
+                size);
+        return nullptr;
+    }
+
+    auto innerIter = outerIter->second.find(character);
+    if(innerIter == mCharTextureMap.end())
+    {
+        SDL_Log("The specified character has not been created: %c",
+                character);
+        return nullptr;
+    }
+
+    return innerIter->second;
+}
+
 void Renderer::addSprite(SpriteComponent* sprite)
 {
     int order = sprite->getOrder();
