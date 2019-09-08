@@ -31,3 +31,21 @@ void Font::finalize()
     
     TTF_Quit();
 }
+
+SDL_Surface* Font::getCharSurface(char character,
+                                  ESize size)
+{
+    SDL_Color black = {0, 0, 0, 255};
+
+    SDL_Surface* surface = TTF_RenderUTF8_Blended(mFontMap.at(size),
+                                                  &character,
+                                                  black);
+    if(!surface)
+    {
+        SDL_Log("SDL_Surface creation falied: %s",
+                TTF_GetError());
+        return nullptr;
+    } 
+
+    return surface;
+}
