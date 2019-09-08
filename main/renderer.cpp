@@ -170,6 +170,21 @@ Shader* Renderer::getShader(EShader shader) const
     }
 }
 
+Texture* Renderer::getTexture(std::string& filename) const
+{
+    auto iterator = mTextureMap.find(filename);
+    if(iterator != mTextureMap.end())
+    {
+        return  iterator->second;
+    }
+    else
+    {
+        SDL_Log("Texture does not exist: %s",
+                filename.c_str());
+        return nullptr;
+    }
+}
+
 void Renderer::addSprite(SpriteComponent* sprite)
 {
     int order = sprite->getOrder();

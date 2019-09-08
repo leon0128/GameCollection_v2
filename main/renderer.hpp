@@ -29,6 +29,10 @@ public:
 
     // Shader の取得
     class Shader* getShader(EShader shader) const;
+    // Texture の取得
+    class Texture* getTexture(std::string& filename) const;
+    class Texture* getCharTexture(Font::ESize size,
+                                  char character) const;
 
     // mSprites に値の追加
     void addSprite(class SpriteComponent* sprite);
