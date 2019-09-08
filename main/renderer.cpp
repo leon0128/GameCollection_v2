@@ -227,6 +227,31 @@ bool Renderer::createTexture(const std::string& filename)
     return true;
 }
 
+void Renderer::destroyTexture(const std::string& filename)
+{
+    auto iterator = mTextureMap.begin();
+    for(;
+        iterator != mTextureMap.end();
+        iterator++)
+    {
+        if(iterator->first == filename)
+            break;
+    }
+
+    // Texture を削除するか警告文の表示
+    if(iterator != mTextureMap.end())
+    {
+        iterator->second->unload();
+        delete iterator->second;
+        mTextureMap.erase(iterator);
+    }
+    else
+    {
+        SDL_Log("Cannot find Texture to delete: %s",
+                filename.c_str());
+    }
+}
+
 bool Renderer::loadShaders()
 {
     if(!loadTextureShader())
