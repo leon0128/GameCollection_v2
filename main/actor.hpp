@@ -27,7 +27,9 @@ public:
     // メンバ変数の設定、取得
     void setState(EState state){mState = state;}
     EState getState() const {return mState;}
-
+    const Matrix4& getWorldTransform() const {return mWorldTransform;}
+    float getClear() const {return mClear;}
+ 
 protected:
     // mComponentsを空にする
     void clearComponent();
