@@ -85,6 +85,8 @@ bool Renderer::initialize()
 
     // mSpriteVAO の設定
     loadSpriteVAO();
+    // mCharTextureMap の設定
+    loadCharTextureMap();
 
     return true;
 }
@@ -197,7 +199,7 @@ Texture* Renderer::getCharTexture(Font::ESize size,
     }
 
     auto innerIter = outerIter->second.find(character);
-    if(innerIter == mCharTextureMap.end())
+    if(innerIter == outerIter->second.end())
     {
         SDL_Log("The specified character has not been created: %c",
                 character);
@@ -344,4 +346,29 @@ void Renderer::loadSpriteVAO()
                                  4,
                                  indices,
                                  6);
+}
+
+void Renderer::loadCharTextureMap()
+{
+    Font::ESize sizes[] = {Font::SIZE_8, Font::SIZE_12, Font::SIZE_16,
+                           Font::SIZE_20, Font::SIZE_30, Font::SIZE_40,
+                           Font::SIZE_50, Font::SIZE_60, Font::SIZE_80,
+                           Font::SIZE_100};
+    
+    for(auto size : sizes)
+    {
+        std::unordered_map<char, Texture*> map;
+
+        for(char c = 0x20; c <= 0x7e; c++)
+        {
+            SDL_Surface* surface = mFont->getCharSurface(c, size);
+
+            Texture* texture = new Texture();
+            texture->loadFromSurface(surface);
+            map.emplace(c,
+                        texture);
+        }
+
+        mCharTextureMap.emplace(size, map);
+    }
 }

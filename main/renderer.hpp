@@ -48,6 +48,7 @@ private:
     bool loadShaders();
     bool loadTextureShader();
     void loadSpriteVAO();
+    void loadCharTextureMap();
 
     std::unordered_map<EShader, class Shader*> mShaderMap; // シェーダー
     std::vector<class SpriteComponent*> mSprites;          // スプライト

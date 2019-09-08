@@ -53,8 +53,8 @@ void Shader::setUniform(const char* name,
                         void* value) const
 {
     // shader 内の uniform の捜査
-    GLuint location = glGetUniformLocation(mShaderProgramID,
-                                           name);
+    GLint location = glGetUniformLocation(mShaderProgramID,
+                                          name);
     if(location == -1)
     {
         SDL_Log("The specified uniform cannot be found: %s",
