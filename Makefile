@@ -11,7 +11,7 @@ _2048PASS = _2048/
 
 MAINOBJS  = $(MAINPASS)main.o $(MAINPASS)game.o $(MAINPASS)mathematics.o $(MAINPASS)actor.o
 CONTOBJS  = $(MAINPASS)input_system.o $(MAINPASS)controller.o $(MAINPASS)renderer.o
-DRAWOBJS  = $(MAINPASS)texture.o $(MAINPASS)vertex_array.o $(MAINPASS)shader.o
+DRAWOBJS  = $(MAINPASS)texture.o $(MAINPASS)vertex_array.o $(MAINPASS)shader.o $(MAINPASS)font.o
 COMPOBJS  = $(COMPPASS)component.o $(COMPPASS)sprite_component.o
 _2048OBJS = $(_2048PASS)_2048.o $(_2048PASS)tile.o
 
@@ -33,6 +33,7 @@ debug:
 	$(CC) -c -o $(MAINPASS)texture.o $(MAINPASS)texture.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(MAINPASS)vertex_array.o $(MAINPASS)vertex_array.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(MAINPASS)shader.o $(MAINPASS)shader.cpp $(CFLAGS) $(DEBUG)
+	$(CC) -c -o $(MAINPASS)font.o $(MAINPASS)font.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(COMPPASS)component.o $(COMPPASS)component.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(COMPPASS)sprite_component.o $(COMPPASS)sprite_component.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(_2048PASS)_2048.o $(_2048PASS)_2048.cpp $(CFLAGS) $(DEBUG)
