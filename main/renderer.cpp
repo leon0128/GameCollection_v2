@@ -62,6 +62,13 @@ bool Renderer::initialize()
     }
     glGetError();
 
+    // mShaderMap の設定
+    if(!loadShaders())
+    {
+        SDL_Log("Failed to load Shaders");
+        return false;
+    }
+
     return true;
 }
 
@@ -91,6 +98,9 @@ void Renderer::draw()
                         GL_ONE,
                         GL_ZERO);
 
+    // mSprites の描画
+    for(auto& sprite : mSprites)
+        sprite->draw();
     
     // バッファ入れ替え
     SDL_GL_SwapWindow(mWindow);
@@ -152,4 +162,32 @@ void Renderer::removeSprite(SpriteComponent* sprite)
         SDL_Log("The target for deletion was not found: %s",
                 __PRETTY_FUNCTION__);
     }
+}
+
+bool Renderer::loadShaders()
+{
+    if(!loadTextureShader())
+        return false;
+}
+
+bool Renderer::loadTextureShader()
+{
+    Shader* shader = new Shader();
+
+    // シェーダーの設定
+    if(!shader->load("../shader/texture.vert",
+                     "../shader/texture.frag"))
+    {
+        return false;
+    }
+
+    // uniform の設定
+    shader->setActive();
+    shader->setUniform("uViewProjection",
+                       Shader::MATRIX4,
+                       Matrix4::createSimpleViewProjection(Game::SCREEN_WIDTH,
+                                                           Game::SCREEN_HEIGHT));
+
+    mShaderMap.emplace(TEXTURE,
+                       shader);
 }

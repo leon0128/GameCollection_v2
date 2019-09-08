@@ -34,6 +34,10 @@ public:
     void removeSprite(class SpriteComponent* sprite);
 
 private:
+    // initialize() で呼び出す
+    bool loadShaders();
+    bool loadTextureShader();
+
     std::unordered_map<EShader, class Shader*> mShaderMap; // シェーダー
     std::vector<class SpriteComponent*> mSprites;          // スプライト
 
