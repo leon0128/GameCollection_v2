@@ -32,20 +32,9 @@ public:
     void setActive() const;
 
     // uniform に値の設定
-    template<typename T>
     void setUniform(const char* name,
                     EType type,
-                    const T& value) const;
-
-    // シェーダープログラムの uniform に値の設定
-    void setMatrix4Uniform(const char* uniformName,
-                           const Matrix4& matrix) const;
-    void setVector3Uniform(const char* uniformName,
-                           const Vector3& vector) const;
-    void setFloatUniform(const char* uniformName,
-                         float value) const;
-    void setColorUniform(const char* uniformName,
-                         const SDL_Color& color) const;
+                    void* value) const;
 
 private:
     // load() で実行

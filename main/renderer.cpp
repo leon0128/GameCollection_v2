@@ -168,6 +168,8 @@ bool Renderer::loadShaders()
 {
     if(!loadTextureShader())
         return false;
+    
+    return true;
 }
 
 bool Renderer::loadTextureShader()
@@ -175,19 +177,22 @@ bool Renderer::loadTextureShader()
     Shader* shader = new Shader();
 
     // シェーダーの設定
-    if(!shader->load("../shader/texture.vert",
-                     "../shader/texture.frag"))
+    if(!shader->load("shader/texture.vert",
+                     "shader/texture.frag"))
     {
         return false;
     }
 
     // uniform の設定
     shader->setActive();
+    Matrix4 simple = Matrix4::createSimpleViewProjection(Game::SCREEN_WIDTH,
+                                                         Game::SCREEN_HEIGHT);
     shader->setUniform("uViewProjection",
                        Shader::MATRIX4,
-                       Matrix4::createSimpleViewProjection(Game::SCREEN_WIDTH,
-                                                           Game::SCREEN_HEIGHT));
+                       &simple);
 
     mShaderMap.emplace(TEXTURE,
                        shader);
+    
+    return true;
 }

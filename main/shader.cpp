@@ -48,10 +48,9 @@ void Shader::setActive() const
     glUseProgram(mShaderProgramID);
 }
 
-template<typename T>
 void Shader::setUniform(const char* name,
                         EType type,
-                        const T& value) const
+                        void* value) const
 {
     // shader 内の uniform の捜査
     GLuint location = glGetUniformLocation(mShaderProgramID,
@@ -66,31 +65,39 @@ void Shader::setUniform(const char* name,
     switch(type)
     {
         case(FLOAT):
+        {
+            float* temp = static_cast<float*>(value);
             glUniform1f(location,
-                        value);
+                        *temp);
             break;
-
+        }
         case(COLOR):
+        {
+            SDL_Color* temp = static_cast<SDL_Color*>(value);
             glUniform4f(location,
-                        value.r / 255.0f,
-                        value.g / 255.0f,
-                        value.b / 200.0f,
-                        value.a / 255.0f);
+                        temp->r / 255.0f,
+                        temp->g / 255.0f,
+                        temp->b / 200.0f,
+                        temp->a / 255.0f);
             break;
-
+        }
         case(VECTOR3):
+        {
+            Vector3* temp = static_cast<Vector3*>(value);
             glUniform3fv(location,
                          1,
-                         value.getAsFloatPointer());
+                         temp->getAsFloatPointer());
             break;
-
+        }
         case(MATRIX4):
+        {
+            Matrix4* temp = static_cast<Matrix4*>(value);
             glUniformMatrix4fv(location,
                                1,
                                GL_TRUE,
-                               value.getAsFloatPointer());
+                               temp->getAsFloatPointer());
             break;
-
+        }
         default:
             SDL_Log("Type not yet implemented: %d",
                     type);
@@ -113,7 +120,8 @@ bool Shader::compile(const std::string& filename,
     // ファイルテキストを const char* として読み込む
     std::stringstream sstream;
     sstream << shaderFile.rdbuf();
-    const char* contents = sstream.str().c_str();
+    std::string contents = sstream.str();
+    const char* contentsChar = contents.c_str();
 
     // シェーダー作成
     outShader = glCreateShader(type);
@@ -121,7 +129,7 @@ bool Shader::compile(const std::string& filename,
     // コンパイル
     glShaderSource(outShader,
                    1,
-                   &(contents),
+                   &(contentsChar),
                    nullptr);
     glCompileShader(outShader);
     if(!isCompiled(outShader))
