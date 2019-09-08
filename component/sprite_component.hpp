@@ -16,6 +16,8 @@ public:
 
 protected:
     // メンバ変数の設定、取得
+    const Vector2 getSize() const {return mSize;}
+    void setSize(const Vector2& size){mSize = size;}
     class Shader* getShader() const {return mShader;}
     void setShader(class Shader* shader){mShader = shader;}
     class Renderer* getRenderer() const {return mRenderer;}

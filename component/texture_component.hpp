@@ -2,7 +2,7 @@
 
 #include "sprite_component.hpp"
 
-class TextureComponent : public Component
+class TextureComponent : public SpriteComponent
 {
 public:
     TextureComponent(class Actor* actor,
@@ -11,6 +11,8 @@ public:
     virtual ~TextureComponent(){}
 
     void draw() override;
+
+    void setTexture(class Texture* texture);
 
 private:
     class Texture* mTexture; // Texture
