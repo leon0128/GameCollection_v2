@@ -1,20 +1,30 @@
 #include "controller.hpp"
 #include "game.hpp"
 #include "actor.hpp"
+#include "renderer.hpp"
 
 Controller::Controller(Game* game):
     mActors(),
     mPendingActors(),
+    mFilePathMap(),
     mGame(game),
     mLastTicks(0),
     mState(TITLE),
-    mIsResetActor(true),
+    mIsResetObject(true),
     mIsUpdatingActor(false)
 {
 }
 
 bool Controller::initialize()
 {
+    // 画像ファイルのファイルパス設定
+    mFilePathMap.emplace(TITLE,
+                         "image/title");
+    mFilePathMap.emplace(SELECT,
+                         "image/select");
+    mFilePathMap.emplace(_2048,
+                         "image/_2048");
+
     // mLastTicks の設定
     mLastTicks = SDL_GetTicks();
 
@@ -27,8 +37,13 @@ void Controller::update()
     float deltaTime = controllTime();
 
     // Actor の作成
-    if(mIsResetActor)
+    if(mIsResetObject)
+    {
         controllActor();
+        controllTexture();
+
+        mIsResetObject = false;
+    }
 
     // Actor の更新
     updateActor(deltaTime);
@@ -105,8 +120,6 @@ float Controller::controllTime()
 
 void Controller::controllActor()
 {
-    mIsResetActor = false;
-
     // 現在存在するActorの削除
     for(auto& actor : mActors)
         actor->setState(Actor::DEAD);
@@ -128,6 +141,32 @@ void Controller::controllActor()
         {
             break;
         }
+    }
+}
+
+void Controller::controllTexture() const
+{
+    // テクスチャの削除
+    mGame->getRenderer()->destoryAllTexture();
+
+    // テクスチャの設定
+    auto iterator = mFilePathMap.find(mState);
+    if(iterator == mFilePathMap.end())
+    {
+        SDL_Log("Directory not set: %d",
+                mState);
+        return;
+    }
+
+    const char* filePath = iterator->second.c_str();
+    const boost::filesystem::path path(filePath);
+
+    BOOST_FOREACH(const boost::filesystem::path& p,
+                  std::make_pair(boost::filesystem::directory_iterator(path),
+                                 boost::filesystem::directory_iterator()))
+    {
+        if(!boost::filesystem::is_directory(p))
+            mGame->getRenderer()->createTexture(p.generic_string());
     }
 }
 

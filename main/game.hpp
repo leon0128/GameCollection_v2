@@ -21,6 +21,9 @@ public:
     // Game 終了時に呼び出す
     void end(){mIsLoop = false;}
 
+    // Controller で使用する(修正予定)
+    class Renderer* getRenderer() const {return mRenderer;}
+
 private:
     // runLoop() 内のループに使用
     void input();

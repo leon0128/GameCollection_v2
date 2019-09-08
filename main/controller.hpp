@@ -1,7 +1,10 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <boost/filesystem.hpp>
+#include <boost/foreach.hpp>
 #include <vector>
+#include <unordered_map>
 
 class Controller
 {
@@ -28,21 +31,24 @@ public:
 
     // Game の状態を更新するか
     void setState(EState state){mState = state;
-                                mIsResetActor = true;};
+                                mIsResetObject = true;};
 
 private:
     // update() で呼び出す
     float controllTime();              // 時間制御
     void controllActor();              // 各ゲーム、モードの主要Actorの作成
+    void controllTexture() const;      // Renderer::mTextureMap の更新
     void updateActor(float deltaTime); // Actor の更新
 
     std::vector<class Actor*> mActors;        // Actor
     std::vector<class Actor*> mPendingActors; // Actor更新中に一時的に格納される
 
+    std::unordered_map<EState, std::string> mFilePathMap; // 画像ファイルのファイルパス
+
     class Game* mGame; // 自身が所属するGameクラス
     Uint32 mLastTicks; // 最終更新時間
     EState mState;     // Game の状態
 
-    bool mIsResetActor;    // Actorを再設定するか
+    bool mIsResetObject;    // Actor 及び Texture を再設定するか
     bool mIsUpdatingActor; // Actorを更新中かどうか
 };
