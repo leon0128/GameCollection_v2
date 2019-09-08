@@ -110,7 +110,15 @@ void Renderer::finalize()
     mFont->finalize();
     delete mFont;
 
+    // mSpriteVAO の削除
+    delete mSpriteVAO;
 
+    // mShaderMap の削除
+    for(auto& shader : mShaderMap)
+    {
+        shader.second->unload();
+        delete shader.second;
+    }
 
     // mContext, mWindow の削除
     SDL_GL_DeleteContext(mContext);
@@ -135,6 +143,9 @@ void Renderer::draw()
                         GL_ONE_MINUS_SRC_ALPHA,
                         GL_ONE,
                         GL_ZERO);
+
+    // SpriteVAO の有効化
+    mSpriteVAO->setActive();
 
     // mSprites の描画
     for(auto& sprite : mSprites)
@@ -200,6 +211,20 @@ void Renderer::removeSprite(SpriteComponent* sprite)
         SDL_Log("The target for deletion was not found: %s",
                 __PRETTY_FUNCTION__);
     }
+}
+
+bool Renderer::createTexture(const std::string& filename)
+{
+    // Texture 作成
+    Texture* texture = new Texture();
+    if(!texture->load(filename))
+        return false;
+
+    // mTextures への挿入
+    mTextureMap.emplace(filename,
+                        texture);
+    
+    return true;
 }
 
 bool Renderer::loadShaders()
