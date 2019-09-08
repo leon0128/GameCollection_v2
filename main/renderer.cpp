@@ -1,14 +1,20 @@
 #include "renderer.hpp"
 #include "game.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
+#include "vertex_array.hpp"
 #include "../component/sprite_component.hpp"
 
 Renderer::Renderer(Game* game):
     mShaderMap(),
     mSprites(),
+    mTextureMap(),
+    mCharTextureMap(),
     mGame(game),
     mWindow(nullptr),
-    mContext()
+    mContext(),
+    mFont(nullptr),
+    mSpriteVAO(nullptr)
 {
 }
 
@@ -40,8 +46,8 @@ bool Renderer::initialize()
     mWindow = SDL_CreateWindow("Game",
                                SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED,
-                               (int)Game::SCREEN_WIDTH,
-                               (int)Game::SCREEN_HEIGHT,
+                               static_cast<int>(Game::SCREEN_WIDTH),
+                               static_cast<int>(Game::SCREEN_HEIGHT),
                                SDL_WINDOW_OPENGL);
     if(!mWindow)
     {
@@ -62,6 +68,14 @@ bool Renderer::initialize()
     }
     glGetError();
 
+    // mFont の設定
+    mFont = new Font();
+    if(!mFont->initialize())
+    {
+        SDL_Log("Failed to initialize Font");
+        return false;
+    }
+
     // mShaderMap の設定
     if(!loadShaders())
     {
@@ -69,11 +83,35 @@ bool Renderer::initialize()
         return false;
     }
 
+    // mSpriteVAO の設定
+    loadSpriteVAO();
+
     return true;
 }
 
 void Renderer::finalize()
 {
+    // Texture の削除
+    for(auto& map : mCharTextureMap)
+    {
+        for(auto& texture : map.second)
+        {
+            texture.second->unload();
+            delete texture.second;
+        }
+    }
+    for(auto& texture : mTextureMap)
+    {
+        texture.second->unload();
+        delete texture.second;
+    }
+
+    // フォントの削除
+    mFont->finalize();
+    delete mFont;
+
+
+
     // mContext, mWindow の削除
     SDL_GL_DeleteContext(mContext);
     SDL_DestroyWindow(mWindow);
@@ -195,4 +233,19 @@ bool Renderer::loadTextureShader()
                        shader);
     
     return true;
+}
+
+void Renderer::loadSpriteVAO()
+{
+    float vertices[] = {-0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                         0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                         0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    unsigned int indices[] = {0, 1, 2,
+                              2, 3, 0};
+
+    mSpriteVAO = new VertexArray(vertices,
+                                 4,
+                                 indices,
+                                 6);
 }
