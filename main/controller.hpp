@@ -32,6 +32,10 @@ public:
     // Game の状態を更新するか
     void setState(EState state){mState = state;
                                 mIsResetObject = true;};
+    
+    // SpriteComponent でRendererを取得するために一時的に実装
+    // 解決策が見つかったら削除予定
+    class Game* getGame() const {return mGame;}
 
 private:
     // update() で呼び出す

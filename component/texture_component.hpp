@@ -1,18 +1,19 @@
 #pragma once
 
 #include "sprite_component.hpp"
+#include <string>
 
 class TextureComponent : public SpriteComponent
 {
 public:
     TextureComponent(class Actor* actor,
-                     class Renderer* renderer,
+                     std::string& filename,
                      int drawOrder = 100);
     virtual ~TextureComponent(){}
 
     void draw() override;
 
-    void setTexture(class Texture* texture);
+    void setTexture(std::string& filename);
 
 private:
     class Texture* mTexture; // Texture

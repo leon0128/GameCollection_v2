@@ -8,7 +8,7 @@ public:
     virtual ~Component();
 
     // Actor::update() で呼び出す
-    virtual void update(float deltaTime) = 0;
+    virtual void update(float deltaTime){}
 
     // メンバ変数の取得
     int getOrder() const {return mOrder;}

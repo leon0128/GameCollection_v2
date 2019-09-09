@@ -4,13 +4,18 @@
 #include "../main/shader.hpp"
 #include "../main/texture.hpp"
 
+#include <iostream>
+
 TextureComponent::TextureComponent(Actor* actor,
-                                   Renderer* renderer,
+                                   std::string& filename,
                                    int drawOrder):
-    SpriteComponent(actor, renderer, drawOrder),
+    SpriteComponent(actor, drawOrder),
     mTexture(nullptr)
-{
-    setShader(renderer->getShader(Renderer::TEXTURE));
+{   
+    // setTexture(filename);
+    mTexture = getRenderer()->getCharTexture(Font::SIZE_30,
+                                         'A');
+    setSize(mTexture->getSize());
 }
 
 void TextureComponent::draw()
@@ -24,16 +29,29 @@ void TextureComponent::draw()
                                                1.0f);
     Matrix4 worldMatrix = scaleMatrix * getActor()->getWorldTransform();
 
+    SDL_Log("%f, %f", getSize().x, getSize().y);
+    for(int i = 0; i < 4; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            std::cout << getActor()->getWorldTransform().mat[i][j] << ", ";
+        }
+
+        std::cout << std::endl;
+    }
+
     // Shader の設定
-    getShader()->setActive();
-    getShader()->setUniform("uWorldTransform",
-                            Shader::MATRIX4,
-                            &worldMatrix);
+    Shader* shader = getRenderer()->getShader(Renderer::TEXTURE);
+    shader->setActive();
+    shader->setUniform("uWorldTransform",
+                       Shader::MATRIX4,
+                       &worldMatrix);
     float alpha = getActor()->getClear();
-    getShader()->setUniform("uAlpha",
-                            Shader::FLOAT,
-                            &alpha);
+    shader->setUniform("uAlpha",
+                       Shader::FLOAT,
+                       &alpha);
     
+    // Texture の有効化
     mTexture->setActive();
 
     // 描画
@@ -43,10 +61,13 @@ void TextureComponent::draw()
                    nullptr);
 }
 
-void TextureComponent::setTexture(Texture* texture)
+void TextureComponent::setTexture(std::string& filename)
 {
-    if(texture)
-        setSize(texture->getSize());
+    if(filename.size() == 0)
+        return;
+    
+    mTexture = getRenderer()->getTexture(filename);
 
-    mTexture = texture;
+    if(mTexture)
+        setSize(mTexture->getSize());
 }

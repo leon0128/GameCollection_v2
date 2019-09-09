@@ -3,6 +3,8 @@
 #include "actor.hpp"
 #include "renderer.hpp"
 
+#include "../title/title.hpp"
+
 Controller::Controller(Game* game):
     mActors(),
     mPendingActors(),
@@ -39,8 +41,8 @@ void Controller::update()
     // Actor の作成
     if(mIsResetObject)
     {
-        controllActor();
         controllTexture();
+        controllActor();
 
         mIsResetObject = false;
     }
@@ -131,6 +133,7 @@ void Controller::controllActor()
     {
         case(TITLE):
         {
+            new Title::Title(this);
             break;
         }
         case(SELECT):

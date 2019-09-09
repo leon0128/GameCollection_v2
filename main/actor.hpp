@@ -30,6 +30,10 @@ public:
     const Matrix4& getWorldTransform() const {return mWorldTransform;}
     float getClear() const {return mClear;}
  
+    // SpriteComponent で Renderer を取得するために一時的に実装
+    // 解決策が見つかったら削除予定
+    class Controller* getController() const {return mController;}
+
 protected:
     // mComponentsを空にする
     void clearComponent();
