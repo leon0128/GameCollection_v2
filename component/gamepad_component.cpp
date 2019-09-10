@@ -13,7 +13,13 @@ GamepadComponent::GamepadComponent(Actor* actor,
 void GamepadComponent::addKeyboardMap(EGamepad button,
                                       SDL_Scancode scancode)
 {
-
+    // 要素がすでに含まれているかの調査
+    auto iterator = std::find(mKeyboardMap.at(button).begin(),
+                              mKeyboardMap.at(button).end(),
+                              scancode);
+    
+    if(iterator == mKeyboardMap.at(button).end())
+        mKeyboardMap.at(button).emplace_back(scancode);
 }
 
 void GamepadComponent::loadKey()
