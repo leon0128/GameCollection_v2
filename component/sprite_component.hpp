@@ -21,7 +21,7 @@ protected:
     // メンバ変数の設定、取得
     class Renderer* getRenderer() const {return mRenderer;}
     void setSize(const Vector2& size){mSize = size;}
-    Vector2& getRelativePosition() const {return mRelativePosition;}
+    const Vector2& getRelativePosition() const {return mRelativePosition;}
 
 private:
     class Renderer* mRenderer; // レンダラー

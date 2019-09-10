@@ -33,7 +33,7 @@ void RectangleComponent::draw()
                        &worldMatrix);
     shader->setUniform("uFilledColor",
                        Shader::COLOR,
-                       mColor);
+                       &mColor);
     
     glDrawElements(GL_TRIANGLES,
                    6,
