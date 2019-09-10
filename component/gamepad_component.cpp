@@ -1,13 +1,31 @@
 #include "gamepad_component.hpp"
+#include "../main/input_system.hpp"
 #include "../main/actor.hpp"
 
 GamepadComponent::GamepadComponent(Actor* actor,
+                                   InputSystem* inputSystem,
                                    int order):
     Component(actor, order),
     mGamepad(),
-    mKeyboardMap()
+    mKeyboardMap(),
+    mInputSystem(inputSystem)
 {
     loadKey();
+}
+
+void GamepadComponent::update(float deltaTime)
+{
+    for(auto& pad : mGamepad)
+    {
+        for(auto scancode : mKeyboardMap.at(pad.first))
+        {
+            if(mInputSystem->getKeyboardState(scancode))
+            {
+                pad.second++;
+                break;
+            }
+        }    
+    }
 }
 
 void GamepadComponent::addKeyboardMap(EGamepad button,

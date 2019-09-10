@@ -31,8 +31,11 @@ public:
     };
 
     GamepadComponent(class Actor* actor,
+                     class InputSystem* inputSystem,
                      int order = 10);
     ~GamepadComponent(){}
+
+    void update(float deltaTime) override;
 
     // EGamepad に対応する SDL_Scancode の追加
     void addKeyboardMap(EGamepad button,
@@ -47,4 +50,6 @@ private:
 
     std::unordered_map<EGamepad, unsigned int> mGamepad;                  // ゲームパッド
     std::unordered_map<EGamepad, std::vector<SDL_Scancode>> mKeyboardMap; // EGamepad と SDL_Scancode の対応表
+
+    class InputSystem* mInputSystem; // 入力処理クラス
 };

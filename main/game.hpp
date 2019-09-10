@@ -23,6 +23,7 @@ public:
 
     // Controller で使用する(修正予定)
     class Renderer* getRenderer() const {return mRenderer;}
+    class InputSystem* getInputSystem() const {return mInputSystem;}
 
 private:
     // runLoop() 内のループに使用
