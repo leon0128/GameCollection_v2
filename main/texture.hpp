@@ -27,9 +27,9 @@ public:
 private:
     // load() で呼び出す
     bool loadImage(const std::string& filename,
-                   unsigned char* image,
+                   unsigned char** image,
                    int* format);
-    void loadFromImage(unsigned char* image,
+    void loadFromImage(unsigned char** image,
                        int* format);
 
     GLuint mTextureID; // Texture の openGL ID

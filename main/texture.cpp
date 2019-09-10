@@ -13,14 +13,14 @@ bool Texture::load(const std::string& filename)
 
     // 画像のロード
     if(!loadImage(filename,
-                  image,
+                  &image,
                   &format))
     {
         return false;
     }
 
     // 画像をopenGLに渡す
-    loadFromImage(image,
+    loadFromImage(&image,
                   &format);
 
     return true;
@@ -73,19 +73,19 @@ void Texture::setActive()
 }
 
 bool Texture::loadImage(const std::string& filename,
-                        unsigned char* image,
+                        unsigned char** image,
                         int* format)
 {
     int channels = 0;
     int width = 0, height = 0;
 
     // 画像のロード
-    image = SOIL_load_image(filename.c_str(),
-                            &width,
-                            &height,
-                            &channels,
-                            SOIL_LOAD_AUTO);
-    if(!image)
+    *image = SOIL_load_image(filename.c_str(),
+                             &width,
+                             &height,
+                             &channels,
+                             SOIL_LOAD_AUTO);
+    if(!*image)
     {
         SDL_Log("Failed to load image for %s: %s",
                 filename.c_str(),
@@ -101,7 +101,7 @@ bool Texture::loadImage(const std::string& filename,
     return true;
 }
 
-void Texture::loadFromImage(unsigned char* image,
+void Texture::loadFromImage(unsigned char** image,
                             int* format)
 {
     // openGL Texture オブジェクトを作成し、アクティブ化
@@ -119,10 +119,10 @@ void Texture::loadFromImage(unsigned char* image,
                  0,
                  *format,
                  GL_UNSIGNED_BYTE,
-                 image);
+                 *image);
     
     // image の開放
-    SOIL_free_image_data(image);
+    SOIL_free_image_data(*image);
 
     // バイリニアフィルタリングを有効化
     glTexParameteri(GL_TEXTURE_2D,

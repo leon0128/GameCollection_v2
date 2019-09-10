@@ -4,18 +4,13 @@
 #include "../main/shader.hpp"
 #include "../main/texture.hpp"
 
-#include <iostream>
-
 TextureComponent::TextureComponent(Actor* actor,
                                    std::string& filename,
                                    int drawOrder):
     SpriteComponent(actor, drawOrder),
     mTexture(nullptr)
 {   
-    // setTexture(filename);
-    mTexture = getRenderer()->getCharTexture(Font::SIZE_30,
-                                         'A');
-    setSize(mTexture->getSize());
+    setTexture(filename);
 }
 
 void TextureComponent::draw()
@@ -28,17 +23,6 @@ void TextureComponent::draw()
                                                getSize().y,
                                                1.0f);
     Matrix4 worldMatrix = scaleMatrix * getActor()->getWorldTransform();
-
-    SDL_Log("%f, %f", getSize().x, getSize().y);
-    for(int i = 0; i < 4; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            std::cout << getActor()->getWorldTransform().mat[i][j] << ", ";
-        }
-
-        std::cout << std::endl;
-    }
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::TEXTURE);
