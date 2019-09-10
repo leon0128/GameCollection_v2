@@ -4,9 +4,16 @@
 GamepadComponent::GamepadComponent(Actor* actor,
                                    int order):
     Component(actor, order),
-    mGamepad()
+    mGamepad(),
+    mKeyboardMap()
 {
     loadKey();
+}
+
+void GamepadComponent::addKeyboardMap(EGamepad button,
+                                      SDL_Scancode scancode)
+{
+
 }
 
 void GamepadComponent::loadKey()
@@ -17,5 +24,8 @@ void GamepadComponent::loadKey()
                           BUTTON_SELECT, BUTTON_START, BUTTON_HOME};
 
     for(EGamepad button : buttons)
+    {
         mGamepad.emplace(button, 0);
+        mKeyboardMap.emplace(button, std::vector<SDL_Scancode>());
+    }
 }

@@ -1,7 +1,9 @@
 #pragma once
 
 #include "component.hpp"
+#include <SDL2/SDL.h>
 #include <unordered_map>
+#include <vector>
 
 class GamepadComponent : public Component
 {
@@ -31,12 +33,17 @@ public:
                      int order = 10);
     ~GamepadComponent(){}
 
+    // EGamepad に対応する SDL_Scancode の追加
+    void addKeyboardMap(EGamepad button,
+                        SDL_Scancode scancode);
+
     // mGamepadの要素の取得
     unsigned int at(EGamepad button) const {return mGamepad.at(button);}
 
 private:
-    // mGamepad にキーの設定
+    // mGamepad と mKeyboardMap にキーの設定
     void loadKey();
 
-    std::unordered_map<EGamepad, unsigned int> mGamepad; // ゲームパッド
+    std::unordered_map<EGamepad, unsigned int> mGamepad;                  // ゲームパッド
+    std::unordered_map<EGamepad, std::vector<SDL_Scancode>> mKeyboardMap; // EGamepad と SDL_Scancode の対応表
 };
