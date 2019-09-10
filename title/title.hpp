@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../main/actor.hpp"
+#include "../component/gamepad_component.hpp"
 
 namespace Title
 {
@@ -12,7 +13,9 @@ public:
     ~Title(){}
 
 private:
-    
+    void updateActor(float deltaTime) override;
+
+    GamepadComponent* mGamepad;    
 };
 
 };

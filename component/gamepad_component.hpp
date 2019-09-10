@@ -31,7 +31,6 @@ public:
     };
 
     GamepadComponent(class Actor* actor,
-                     class InputSystem* inputSystem,
                      int order = 10);
     ~GamepadComponent(){}
 

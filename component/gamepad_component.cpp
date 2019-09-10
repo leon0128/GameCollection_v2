@@ -1,15 +1,17 @@
 #include "gamepad_component.hpp"
+#include "../main/controller.hpp"
+#include "../main/game.hpp"
 #include "../main/input_system.hpp"
 #include "../main/actor.hpp"
 
 GamepadComponent::GamepadComponent(Actor* actor,
-                                   InputSystem* inputSystem,
                                    int order):
     Component(actor, order),
     mGamepad(),
     mKeyboardMap(),
-    mInputSystem(inputSystem)
+    mInputSystem(nullptr)
 {
+    mInputSystem = actor->getController()->getGame()->getInputSystem();
     loadKey();
 }
 
@@ -17,14 +19,18 @@ void GamepadComponent::update(float deltaTime)
 {
     for(auto& pad : mGamepad)
     {
+        bool isPressed = false;
+
         for(auto scancode : mKeyboardMap.at(pad.first))
         {
             if(mInputSystem->getKeyboardState(scancode))
-            {
-                pad.second++;
-                break;
-            }
-        }    
+                isPressed = true;
+        }
+
+        if(isPressed)
+            pad.second++;
+        else
+            pad.second = 0;
     }
 }
 
