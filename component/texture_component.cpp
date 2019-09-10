@@ -23,6 +23,10 @@ void TextureComponent::draw()
                                                getSize().y,
                                                1.0f);
     Matrix4 worldMatrix = scaleMatrix * getActor()->getWorldTransform();
+    Vector3 relativePos(getRelativePosition().x,
+                        getRelativePosition().y,
+                        0.0f);
+    worldMatrix *= Matrix4::createTranslation(relativePos);
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::TEXTURE);
