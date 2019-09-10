@@ -8,4 +8,5 @@ Title::Title::Title(Controller* controller):
     std::string filename("image/title/hira.png");
     TextureComponent* texture = new TextureComponent(this,
                                                      filename);
+    setClear(0.5f);
 }

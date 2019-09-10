@@ -28,6 +28,7 @@ public:
     void setState(EState state){mState = state;}
     EState getState() const {return mState;}
     const Matrix4& getWorldTransform() const {return mWorldTransform;}
+    void setClear(float clear){mClear = clear;}
     float getClear() const {return mClear;}
  
     // SpriteComponent で Renderer を取得するために一時的に実装

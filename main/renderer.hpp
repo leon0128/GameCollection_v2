@@ -47,6 +47,7 @@ private:
     // initialize() で呼び出す
     bool loadShaders();
     bool loadTextureShader();
+    bool loadRectangleShader();
     void loadSpriteVAO();
     void loadCharTextureMap();
 

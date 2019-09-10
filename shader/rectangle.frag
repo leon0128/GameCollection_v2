@@ -1,7 +1,7 @@
 #version 450 // openGL version
 
 // uniform
-uniform uFilledColor; // 満たす色
+uniform vec4 uFilledColor; // 満たす色
 
 // 出力
 out vec4 outColor; // 出力色
