@@ -10,7 +10,7 @@ class StringComponent : public SpriteComponent
 public:
     StringComponent(class Actor* actor,
                     const std::string& string,
-                    Font::ESize size = Font::30,
+                    Font::ESize size = Font::SIZE_30,
                     int drawOrder = 100);
     ~StringComponent(){}
 

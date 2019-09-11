@@ -11,10 +11,48 @@ StringComponent::StringComponent(Actor* actor,
                                  Font::ESize size,
                                  int drawOrder):
     SpriteComponent(actor, drawOrder),
-    mString(),
+    mStringTexture(),
     mFontSize(size)
 {
     setString(string);
+}
+
+void StringComponent::draw()
+{
+    if(mStringTexture.size() == 0)
+        return;
+
+    Shader* shader = getActor()->getController()->getGame()->getRenderer()->getShader(Renderer::STRING);
+
+
+    float offset = getSize().x / 2.0f * (-1.0f) +
+                   mStringTexture.at(0)->getSize().x / 2.0f;
+    
+    for(size_t i = 0; i < mStringTexture.size(); i++)
+    {
+        Matrix4 scaleMatrix = Matrix4::createScale(mStringTexture.at(i)->getSize().x,
+                                                   mStringTexture.at(i)->getSize().y,
+                                                   1.0f);
+        
+        Matrix4 worldMatrix = scaleMatrix * 
+                              getActor()->getWorldTransform() *
+                              Matrix4::createTranslation(Vector3(offset + getRelativePosition().x,
+                                                                 getRelativePosition().y,
+                                                                 0.0f));
+    
+        offset += mStringTexture.at(i)->getSize().x;
+
+        shader->setActive();
+        shader->setUniform("uWorldTransform",
+                           Shader::MATRIX4,
+                           &worldMatrix);
+        mStringTexture.at(i)->setActive();
+
+        glDrawElements(GL_TRIANGLES,
+                       6,
+                       GL_UNSIGNED_INT,
+                       nullptr);
+    }
 }
 
 void StringComponent::setString(const std::string& string)
