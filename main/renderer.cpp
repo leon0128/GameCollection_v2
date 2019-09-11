@@ -308,6 +308,9 @@ bool Renderer::loadShaders()
     if(!loadRectangleShader())
         return false;
     
+    if(!loadStringShader())
+        return false;
+
     return true;
 }
 
@@ -358,6 +361,32 @@ bool Renderer::loadRectangleShader()
                        &simple);
     
     mShaderMap.emplace(RECTANGLE,
+                       shader);
+    
+    return true;
+}
+
+bool Renderer::loadStringShader()
+{
+    Shader* shader = new Shader();
+
+    // シェーダーの設定
+    if(!shader->load("shader/string.vert",
+                     "shader/string.frag"))
+    {
+        delete shader;
+        return false;
+    }
+
+    // uniform の設定
+    shader->setActive();
+    Matrix4 simple = Matrix4::createSimpleViewProjection(Game::SCREEN_WIDTH,
+                                                         Game::SCREEN_HEIGHT);
+    shader->setUniform("uViewProjection",
+                       Shader::MATRIX4,
+                       &simple);
+    
+    mShaderMap.emplace(STRING,
                        shader);
     
     return true;

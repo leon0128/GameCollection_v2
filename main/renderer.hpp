@@ -48,6 +48,7 @@ private:
     bool loadShaders();
     bool loadTextureShader();
     bool loadRectangleShader();
+    bool loadStringShader();
     void loadSpriteVAO();
     void loadCharTextureMap();
 
