@@ -152,7 +152,7 @@ void Controller::controllActor()
         }
         case(_2048):
         {
-            // new _2048::_2048(this);
+            new _2048::_2048(this);
             break;
         }
     }

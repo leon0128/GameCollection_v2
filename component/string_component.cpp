@@ -21,6 +21,9 @@ void StringComponent::draw()
 {
     if(mStringTexture.size() == 0)
         return;
+    for(auto& texture : mStringTexture)
+        if(!texture)
+            return;
 
     Shader* shader = getActor()->getController()->getGame()->getRenderer()->getShader(Renderer::STRING);
 
