@@ -4,4 +4,5 @@
 _2048::_2048::_2048(Controller* controller):
     Actor(controller)
 {
+    SDL_Log("_2048 created");
 }

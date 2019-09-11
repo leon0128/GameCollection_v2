@@ -68,6 +68,13 @@ bool Renderer::initialize()
     }
     glGetError();
 
+    // mShaderMap の設定
+    if(!loadShaders())
+    {
+        SDL_Log("Failed to load Shaders");
+        return false;
+    }
+
     // mFont の設定
     mFont = new Font();
     if(!mFont->initialize())
@@ -76,17 +83,13 @@ bool Renderer::initialize()
         return false;
     }
 
-    // mShaderMap の設定
-    if(!loadShaders())
-    {
-        SDL_Log("Failed to load Shaders");
-        return false;
-    }
+    // mCharTextureMap の設定
+    loadCharTextureMap();
+    mFont->finalize();
+    delete mFont;
 
     // mSpriteVAO の設定
     loadSpriteVAO();
-    // mCharTextureMap の設定
-    loadCharTextureMap();
 
     return true;
 }
@@ -107,10 +110,6 @@ void Renderer::finalize()
         texture.second->unload();
         delete texture.second;
     }
-
-    // フォントの削除
-    mFont->finalize();
-    delete mFont;
 
     // mSpriteVAO の削除
     delete mSpriteVAO;
@@ -298,6 +297,7 @@ void Renderer::destoryAllTexture()
         texture.second->unload();
         delete texture.second;
     }
+    mTextureMap.clear();
 }
 
 bool Renderer::loadShaders()

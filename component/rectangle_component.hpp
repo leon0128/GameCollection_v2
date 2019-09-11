@@ -11,7 +11,6 @@ public:
                        Vector2& size,
                        SDL_Color& color,
                        int drawOrder = 100);
-    ~RectangleComponent(){}
 
     void draw() override;
 

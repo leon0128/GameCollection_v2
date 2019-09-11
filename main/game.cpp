@@ -65,16 +65,17 @@ void Game::runLoop()
 
 void Game::finalize()
 {
-    // mRenderer の削除
-    mRenderer->finalize();
-    delete mRenderer;
-
     // mController の削除
+    mController->finalize();
     delete mController;
 
     // mInputSystem の削除
     delete mInputSystem;
 
+    // mRenderer の削除
+    mRenderer->finalize();
+    delete mRenderer;
+    
     SDL_Quit();
 }
 

@@ -21,6 +21,7 @@ public:
     ~Controller(){}
 
     bool initialize();
+    void finalize();
 
     // Game::update() で呼び出す
     void update();

@@ -9,7 +9,7 @@ public:
     TextureComponent(class Actor* actor,
                      std::string& filename,
                      int drawOrder = 100);
-    virtual ~TextureComponent(){}
+    ~TextureComponent(){}
 
     void draw() override;
 

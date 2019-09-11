@@ -7,8 +7,3 @@ Component::Component(Actor* actor, int order):
 {
     actor->addComponent(this);
 }
-
-Component::~Component()
-{
-    mActor->removeComponent(this);
-}

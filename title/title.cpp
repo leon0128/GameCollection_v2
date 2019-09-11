@@ -6,9 +6,9 @@ Title::Title::Title(Controller* controller):
     Actor(controller),
     mGamepad(nullptr)
 {
-    std::string filename("image/title/hira.png");
-    TextureComponent* texture = new TextureComponent(this,
-                                                     filename);
+    std::string filename = "image/title/hira.png";
+    new TextureComponent(this,
+                         filename);
     setClear(0.5f);
 
     mGamepad = new GamepadComponent(this);
@@ -19,5 +19,8 @@ Title::Title::Title(Controller* controller):
 void Title::Title::updateActor(float deltaTime)
 {
     if(mGamepad->at(GamepadComponent::BUTTON_A))
-        SDL_Log("pressed");
+    {
+        getController()->setState(Controller::_2048);
+        setState(DEAD);
+    }
 }

@@ -5,7 +5,7 @@ class Component
 public:
     Component(class Actor* actor,
               int order = 100);
-    virtual ~Component();
+    virtual ~Component(){}
 
     // Actor::update() で呼び出す
     virtual void update(float deltaTime){}

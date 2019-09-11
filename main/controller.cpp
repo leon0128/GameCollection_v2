@@ -4,6 +4,7 @@
 #include "renderer.hpp"
 
 #include "../title/title.hpp"
+#include "../_2048/_2048.hpp"
 
 Controller::Controller(Game* game):
     mActors(),
@@ -31,6 +32,15 @@ bool Controller::initialize()
     mLastTicks = SDL_GetTicks();
 
     return true;
+}
+
+void Controller::finalize()
+{
+    while(!mActors.empty())
+        delete mActors.front();
+    
+    while(!mPendingActors.empty())
+        delete mPendingActors.front();
 }
 
 void Controller::update()
@@ -142,6 +152,7 @@ void Controller::controllActor()
         }
         case(_2048):
         {
+            // new _2048::_2048(this);
             break;
         }
     }

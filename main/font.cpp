@@ -27,8 +27,9 @@ bool Font::initialize()
 void Font::finalize()
 {
     for(auto& pair : mFontMap)
+    {
         TTF_CloseFont(pair.second);
-    
+    }
     TTF_Quit();
 }
 

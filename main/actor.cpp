@@ -18,6 +18,9 @@ Actor::Actor(Controller* controller):
 
 Actor::~Actor()
 {
+    for(auto& comp : mComponents)
+        delete comp;
+
     mController->removeActor(this);
 }
 
