@@ -13,4 +13,10 @@ _2048::_2048::_2048(Controller* controller):
     RectangleComponent* rect = new RectangleComponent(this,
                                                       size,
                                                       black);
+    Vector2 relative(100.0f, 100.0f);
+    rect->setRelativePosition(relative);
+
+    // std::string message = "UBUNTU";
+    // new StringComponent(this,
+    //                     message);
 }

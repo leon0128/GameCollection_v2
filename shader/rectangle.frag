@@ -9,5 +9,5 @@ out vec4 outColor; // 出力色
 void main()
 {
     // 色を出力
-    outColor = uFilledColor;
+    outColor = vec4(1, 0.5, 0.5, 1);
 }

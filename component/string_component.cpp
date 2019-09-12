@@ -49,6 +49,7 @@ void StringComponent::draw()
         shader->setUniform("uWorldTransform",
                            Shader::MATRIX4,
                            &worldMatrix);
+
         mStringTexture.at(i)->setActive();
 
         glDrawElements(GL_TRIANGLES,

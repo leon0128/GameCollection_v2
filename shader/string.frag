@@ -17,4 +17,6 @@ void main()
     
     // 透明度の計算
     outColor.w *= uAlpha;
+
+    outColor = vec4(0.0, 1.0, 1.0, 1.0);
 }

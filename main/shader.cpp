@@ -46,6 +46,21 @@ void Shader::unload() const
 void Shader::setActive() const
 {
     glUseProgram(mShaderProgramID);
+
+    char buf[50];
+    GLsizei size;
+
+    for(int i = 0; i < 10; i++)
+    {
+        glGetActiveUniformName(mShaderProgramID,
+                            i,
+                            50,
+                            &size,
+                            buf);
+
+        SDL_Log("shader id: %d", mShaderProgramID);
+        SDL_Log("name: %s: %d", buf, size);
+    }
 }
 
 void Shader::setUniform(const char* name,
