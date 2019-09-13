@@ -13,8 +13,12 @@ StringComponent::StringComponent(Actor* actor,
     SpriteComponent(actor, drawOrder),
     mStringTexture(),
     mColor(),
+    mBackGroundColor(),
     mFontSize(size)
 {
+    SDL_Color bgColor = {0, 0, 0, 0};
+    setBackGroundColor(bgColor);
+
     SDL_Color black = {0, 0, 0, 255};
     setString(string);
     setColor(black);
@@ -55,6 +59,9 @@ void StringComponent::draw()
         shader->setUniform("uCharColor",
                            Shader::COLOR,
                            &mColor);
+        shader->setUniform("uBGColor",
+                           Shader::COLOR,
+                           &mBackGroundColor);
 
         mStringTexture.at(i)->setActive();
 

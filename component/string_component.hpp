@@ -18,10 +18,12 @@ public:
 
     void setString(const std::string& string);
     void setColor(const SDL_Color& color){mColor = color;}
+    void setBackGroundColor(const SDL_Color& color){mBackGroundColor = color;}
 
 private:
     std::vector<class Texture*> mStringTexture; // 描画する文字列 Texture
 
-    SDL_Color mColor;      // 文字列の色
-    Font::ESize mFontSize; // フォントの大きさ
+    SDL_Color mColor;           // 文字列の色
+    SDL_Color mBackGroundColor; // 背景色
+    Font::ESize mFontSize;      // フォントの大きさ
 };
