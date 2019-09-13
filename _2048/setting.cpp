@@ -42,11 +42,16 @@ void _2048::Setting::loadMap()
 
     for(auto index : indices)
         mIndicesMap.emplace(index, 0);
+
+    mIndicesMap.at(BOARD_SIZE) = 2;
+    mIndicesMap.at(MAX_SCORE)  = 5;
+    mIndicesMap.at(TIME_LIMIT) = 5;
 }
 
 void _2048::Setting::loadComponents()
 {
     SDL_Color bgColor = {0, 0, 0, 200};
+    SDL_Color titleColor = {220, 220, 220, 255};
     SDL_Color strColor = {255, 255, 255, 255};
     Vector2 bgSize(400, 300);
 
@@ -100,10 +105,11 @@ void _2048::Setting::loadComponents()
 
     // "Game Start"
     std::string start("Game Start");
+    SDL_Color littleRed = {255, 150, 150, 255};
     Vector2 startPos(0.0f,
                      bgSize.y / 2.0f - attriSpace * mStrings.size() - titleSpace);
     mStrings.emplace_back(new StringComponent(this,
                                               start));
-    mStrings.back()->setColor(strColor);
+    mStrings.back()->setColor(littleRed);
     mStrings.back()->setRelativePosition(startPos);
 }
