@@ -9,6 +9,15 @@ _2048::Setting::Setting(Controller* controller):
     loadMap();
 }
 
+int _2048::Setting::get(EIndices index) const
+{
+    auto& vector = mVectorMap.at(index);
+    
+    size_t i = mIndicesMap.at(index) % vector.size();
+
+    return vector.at(i);
+}
+
 void _2048::Setting::loadMap()
 {
     EIndices indices[] = {NUM_PLAYER, BOARD_SIZE,
