@@ -15,7 +15,7 @@ CONTOBJS  = $(MAINPASS)input_system.o $(MAINPASS)controller.o $(MAINPASS)rendere
 DRAWOBJS  = $(MAINPASS)texture.o $(MAINPASS)vertex_array.o $(MAINPASS)shader.o $(MAINPASS)font.o
 COMPOBJS  = $(COMPPASS)component.o $(COMPPASS)sprite_component.o $(COMPPASS)texture_component.o $(COMPPASS)rectangle_component.o $(COMPPASS)string_component.o $(COMPPASS)gamepad_component.o
 TITLEOBJS = $(TITLEPASS)title.o
-_2048OBJS = $(_2048PASS)_2048.o $(_2048PASS)tile.o
+_2048OBJS = $(_2048PASS)_2048.o $(_2048PASS)setting.o $(_2048PASS)tile.o
 
 all: $(PROGRAM)
 
@@ -44,6 +44,7 @@ debug:
 	$(CC) -c -o $(COMPPASS)gamepad_component.o $(COMPPASS)gamepad_component.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(TITLEPASS)title.o $(TITLEPASS)title.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(_2048PASS)_2048.o $(_2048PASS)_2048.cpp $(CFLAGS) $(DEBUG)
+	$(CC) -c -o $(_2048PASS)setting.o $(_2048PASS)setting.cpp $(CFLAGS) $(DEBUG)
 	$(CC) -c -o $(_2048PASS)tile.o $(_2048PASS)tile.cpp $(CFLAGS) $(DEBUG)
 	
 	$(CC) $(OBJS) $(LIBS) $(DEBUG) -o $(PROGRAM)
