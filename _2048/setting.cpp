@@ -6,7 +6,8 @@ _2048::Setting::Setting(Controller* controller):
     mIndicesMap(),
     mStrings(),
     mGamepad(nullptr),
-    mSelectedIndex(0)
+    mSelectedIndex(0),
+    mIsCompleted(false)
 {
     loadMap();
     loadComponents();
@@ -19,6 +20,52 @@ int _2048::Setting::get(EIndices index) const
     size_t i = mIndicesMap.at(index) % vector.size();
 
     return vector.at(i);
+}
+
+void _2048::Setting::updateActor(float deltaTime)
+{
+    if(mIsCompleted)
+        return;
+
+    input();
+}
+
+void _2048::Setting::input()
+{
+    // 上下左右の移動を示す
+    int vertical = 0, parallel = 0;
+    // 設定完了か
+    bool isCompleted = false;
+
+    // mGamepad で上記の値の変更
+    if(mGamepad->at(GamepadComponent::BUTTON_UP) == 1)
+        vertical--;
+    if(mGamepad->at(GamepadComponent::BUTTON_DOWN) == 1)
+        vertical++;
+    if(mGamepad->at(GamepadComponent::BUTTON_LEFT) == 1)
+        parallel--;
+    if(mGamepad->at(GamepadComponent::BUTTON_RIGHT) == 1)
+        parallel++;
+    
+    if(mGamepad->at(GamepadComponent::BUTTON_START) == 1)
+        isCompleted = true;
+    
+    // 項目の設定
+    mSelectedIndex += vertical;
+    mSelectedIndex = (mSelectedIndex < 0) ? static_cast<int>(mStrings.size()) - 1 : mSelectedIndex;
+
+    // 値の設定
+    EIndices index = static_cast<EIndices>(mSelectedIndex % mStrings.size());
+    if(index != SIZE)
+    {
+        int i = mIndicesMap.at(index) + parallel;
+        i = (mIndicesMap.at(index) < 0) ? static_cast<int>(mVectorMap.size() - 1) : i;
+        mIndicesMap.at(index) = i;
+    }
+    else if(isCompleted)
+    {
+        mIsCompleted = true;
+    }
 }
 
 void _2048::Setting::loadMap()

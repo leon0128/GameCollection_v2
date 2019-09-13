@@ -32,8 +32,8 @@ public:
 private:
     void updataActor(float deltaTime) override;
 
-    // Gamepad からの入力処理
-    
+    // Gamepad からの入力処理(各index の変更)
+    void input();
 
     // メンバ変数のマップに値のロード
     void loadMap();
@@ -46,6 +46,8 @@ private:
 
     GamepadComponent* mGamepad; // ゲームパッド
     int mSelectedIndex;         // 選んでいる要素のインデックス
+
+    bool mIsCompleted; // 設定が終了したか
 };
 
 };
