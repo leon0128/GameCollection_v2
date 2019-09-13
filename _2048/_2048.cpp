@@ -7,7 +7,7 @@
 _2048::_2048::_2048(Controller* controller):
     Actor(controller)
 {
-    SDL_Color black = {255, 255, 255, 255};
+    SDL_Color black = {0, 0, 0, 255};
     Vector2 size(100.0f, 100.0f);
 
     RectangleComponent* rect = new RectangleComponent(this,
@@ -16,7 +16,7 @@ _2048::_2048::_2048(Controller* controller):
     Vector2 relative(100.0f, 100.0f);
     rect->setRelativePosition(relative);
 
-    // std::string message = "UBUNTU";
-    // new StringComponent(this,
-    //                     message);
+    std::string message = "UBUNTU";
+    new StringComponent(this,
+                        message);
 }

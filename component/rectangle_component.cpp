@@ -8,8 +8,9 @@ RectangleComponent::RectangleComponent(Actor* actor,
                                        SDL_Color& color,
                                        int drawOrder):
     SpriteComponent(actor, drawOrder),
-    mColor(color)
+    mColor()
 {
+    setColor(color);
     setSize(size);
 }
 

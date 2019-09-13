@@ -14,6 +14,8 @@ public:
 
     void draw() override;
 
+    void setColor(const SDL_Color& color){mColor = color;}
+
 private:
     SDL_Color mColor; // 矩形を満たす色
 };
