@@ -18,7 +18,9 @@ public:
         NUM_PLAYER,
         BOARD_SIZE,
         MAX_SCORE,
-        TIME_LIMIT
+        TIME_LIMIT,
+
+        SIZE
     };
 
     Setting(Controller* controller);
@@ -32,9 +34,12 @@ private:
 
     // メンバ変数のマップに値のロード
     void loadMap();
+    // Component の設定
+    void loadComponents();
 
     std::unordered_map<EIndices, std::vector<int>> mVectorMap; // 配列を纏めたマップ
     std::unordered_map<EIndices, int> mIndicesMap; // インデックスを纏めた配列
+    std::vector<class StringComponent*> mStrings;  // 属性値のStringComponents
 
     int mSelectedIndex;
 };
