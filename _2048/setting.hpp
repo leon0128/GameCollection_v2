@@ -30,10 +30,11 @@ public:
     int get(EIndices index) const;
 
 private:
-    void updataActor(float deltaTime) override;
+    void updateActor(float deltaTime) override;
 
-    // Gamepad からの入力処理(各index の変更)
-    void input();
+    // updateActor() で実行
+    void input();         // mGamepad を参考にmIndicesMapの値の変更
+    void updateStrings(); // mStrings の更新
 
     // メンバ変数のマップに値のロード
     void loadMap();

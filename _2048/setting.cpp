@@ -28,6 +28,14 @@ void _2048::Setting::updateActor(float deltaTime)
         return;
 
     input();
+    updateStrings();
+
+    if(mIsCompleted)
+    {
+        mStrings.clear();
+        mGamepad = nullptr;
+        clearComponent();
+    }
 }
 
 void _2048::Setting::input()
@@ -59,13 +67,54 @@ void _2048::Setting::input()
     if(index != SIZE)
     {
         int i = mIndicesMap.at(index) + parallel;
-        i = (mIndicesMap.at(index) < 0) ? static_cast<int>(mVectorMap.size() - 1) : i;
+        i = (mIndicesMap.at(index) < 0) ? static_cast<int>(mVectorMap.at(index).size() - 1) : i;
         mIndicesMap.at(index) = i;
     }
     else if(isCompleted)
     {
         mIsCompleted = true;
     }
+}
+
+void _2048::Setting::updateStrings()
+{
+    EIndices index = static_cast<EIndices>(mSelectedIndex % mStrings.size());
+    switch(index)
+    {
+        case(NUM_PLAYER):
+        {
+            std::string numPlayer = std::to_string(get(index));
+            mStrings.at(index)->setString(numPlayer + " player");
+            break;
+        }
+        case(BOARD_SIZE):
+        {
+            std::string boardSize = std::to_string(get(index));
+            mStrings.at(index)->setString(boardSize + " * " + boardSize);
+            break;
+        }
+        case(MAX_SCORE):
+        {
+            std::string maxScore = std::to_string(static_cast<int>(std::pow(2.0f, get(MAX_SCORE))));
+            mStrings.at(index)->setString(maxScore + " points");
+            break;
+        }
+        case(TIME_LIMIT):
+        {
+            std::string limitTime = std::to_string(get(index));
+            mStrings.at(index)->setString(limitTime + "seconds");
+            break;
+        }
+        case(SIZE):
+            break;
+    }
+
+    // 背景色の初期化
+    SDL_Color clear = {0, 0, 0, 0};
+    SDL_Color gray = {100, 100, 100, 255};
+    for(auto& string : mStrings)
+        string->setBackGroundColor(clear);
+    mStrings.at(index)->setBackGroundColor(gray);
 }
 
 void _2048::Setting::loadMap()
@@ -76,7 +125,7 @@ void _2048::Setting::loadMap()
     // 各項目の値
     std::vector<int> numPlayer = {1, 2};
     std::vector<int> boardSize = {2, 3, 4, 5, 6, 7, 8, 9, 10};
-    std::vector<int> maxScore  = {0, 4, 6, 8, 10, 11, 12, 13, 15, 17, 20, 24, 28, 32};
+    std::vector<int> maxScore  = {0, 4, 6, 8, 10, 11, 12, 13, 15, 17, 20, 24, 28, 30};
     std::vector<int> limitTime = {0, 30, 60, 90, 120, 180, 300, 600};
 
     mVectorMap.emplace(NUM_PLAYER,
