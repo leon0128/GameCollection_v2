@@ -14,9 +14,4 @@ void main()
     // 出力色を uTexture から取得
     outColor = texture(uTexture,
                        fragTexCoord);
-    
-    // 透明度の計算
-    outColor.w *= uAlpha;
-
-    outColor = vec4(0.0, 1.0, 1.0, 1.0);
 }
