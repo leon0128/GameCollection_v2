@@ -3,6 +3,7 @@
 // uniform
 uniform mat4 uWorldTransform; // ワールド変換行列
 uniform mat4 uViewProjection; // ビュー射影行列
+uniform vec4 uCharColor;    // 文字の色
 
 // 入力
 layout(location = 0) in vec3 inPosition; // 頂点位置

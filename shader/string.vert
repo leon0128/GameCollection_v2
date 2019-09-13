@@ -3,14 +3,14 @@
 // uniform
 uniform mat4 uWorldTransform; // ワールド変換行列
 uniform mat4 uViewProjection; // ビュー射影行列
-uniform vec4 uColor;          // 文字列の色
+uniform vec4 uCharColor;      // 文字列の色
 
 // 入力
 layout(location = 0) in vec3 inPosition; // 頂点位置
 layout(location = 2) in vec2 inTexCoord; // テクスチャ座標
 // 出力
 out vec2 fragTexCoord; // テクスチャ座標
-out vec4 color;        // 文字列の色
+out vec4 charColor;    // 文字列の色
 
 void main()
 {
@@ -25,5 +25,5 @@ void main()
     
     // テクスチャ座標の設定
     fragTexCoord = inTexCoord;
-    color = uColor;
+    charColor = uCharColor;
 }

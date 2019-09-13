@@ -17,9 +17,11 @@ public:
     void draw() override;
 
     void setString(const std::string& string);
+    void setColor(const SDL_Color& color){mColor = color;}
 
 private:
     std::vector<class Texture*> mStringTexture; // 描画する文字列 Texture
-    
+
+    SDL_Color mColor;      // 文字列の色
     Font::ESize mFontSize; // フォントの大きさ
 };
