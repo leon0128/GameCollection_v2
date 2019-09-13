@@ -2,6 +2,23 @@
 
 #include <cmath>
 #include <cstring>
+#include <random>
+
+// ランダム生成機
+class Random
+{
+public:
+    static Random RANDOM; // ランダムな値を取得する時はこれを使う
+
+    Random();
+    ~Random(){}
+
+    std::uint64_t operator()(std::uint64_t size);
+
+private:
+    std::mt19937_64 mEngine;
+};
+
 
 // 2次元の整数値座標
 class Coordinate2

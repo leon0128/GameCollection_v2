@@ -1,5 +1,7 @@
 #include "mathematics.hpp"
 
+Random Random::RANDOM;
+
 // Vector2 定数
 const Vector2 Vector2::ZERO(0.0f, 0.0f);
 const Vector2 Vector2::UNIT_X(1.0f, 0.0f);
@@ -25,6 +27,19 @@ const Matrix4 Matrix4::IDENTITY(MAT4);
 
 // Quaternion 定数
 const Quaternion Quaternion::IDENTITY(0.0f, 0.0f, 0.0f, 1.0f);
+
+Random::Random():
+    mEngine()
+{
+    std::random_device seed_gen;
+    mEngine = std::mt19937_64(seed_gen());
+}
+
+std::uint64_t Random::operator()(std::uint64_t size)
+{
+    std::uint64_t result = mEngine() % size; 
+    return result;
+}
 
 Coordinate2::Coordinate2():
     x(0),
