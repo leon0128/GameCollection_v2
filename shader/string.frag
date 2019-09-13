@@ -17,7 +17,9 @@ void main()
                        fragTexCoord);
     if(outColor.w != 0.0)
     {
+        float w = outColor.w;
         outColor = charColor;
+        outColor.w = w;
     }
     else
     {
