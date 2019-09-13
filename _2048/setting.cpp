@@ -7,10 +7,12 @@ _2048::Setting::Setting(Controller* controller):
     mStrings(),
     mGamepad(nullptr),
     mSelectedIndex(0),
-    mIsCompleted(false)
+    mIsCompleted(false),
+    mIsStarted(true)
 {
     loadMap();
     loadComponents();
+    mSelectedIndex = SIZE;
 }
 
 int _2048::Setting::get(EIndices index) const
@@ -36,6 +38,7 @@ void _2048::Setting::updateActor(float deltaTime)
         mGamepad = nullptr;
         clearComponent();
     }
+    mIsStarted = false;
 }
 
 void _2048::Setting::input()
@@ -55,7 +58,8 @@ void _2048::Setting::input()
     if(mGamepad->at(GamepadComponent::BUTTON_RIGHT) == 1)
         parallel++;
     
-    if(mGamepad->at(GamepadComponent::BUTTON_START) == 1)
+    if(mGamepad->at(GamepadComponent::BUTTON_START) == 1 &&
+       !mIsStarted)
         isCompleted = true;
     
     // 項目の設定

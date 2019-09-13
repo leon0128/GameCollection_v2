@@ -49,6 +49,7 @@ private:
     int mSelectedIndex;         // 選んでいる要素のインデックス
 
     bool mIsCompleted; // 設定が終了したか
+    bool mIsStarted;   // 作成したフレームのみtrueとなる
 };
 
 };
