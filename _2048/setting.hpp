@@ -30,7 +30,10 @@ public:
     int get(EIndices index) const;
 
 private:
-    void updataActor(float deltaTime);
+    void updataActor(float deltaTime) override;
+
+    // Gamepad からの入力処理
+    
 
     // メンバ変数のマップに値のロード
     void loadMap();
@@ -41,7 +44,8 @@ private:
     std::unordered_map<EIndices, int> mIndicesMap; // インデックスを纏めた配列
     std::vector<class StringComponent*> mStrings;  // 属性値のStringComponents
 
-    int mSelectedIndex;
+    GamepadComponent* mGamepad; // ゲームパッド
+    int mSelectedIndex;         // 選んでいる要素のインデックス
 };
 
 };

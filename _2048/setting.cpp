@@ -5,6 +5,7 @@ _2048::Setting::Setting(Controller* controller):
     mVectorMap(),
     mIndicesMap(),
     mStrings(),
+    mGamepad(nullptr),
     mSelectedIndex(0)
 {
     loadMap();
@@ -112,4 +113,25 @@ void _2048::Setting::loadComponents()
                                               start));
     mStrings.back()->setColor(littleRed);
     mStrings.back()->setRelativePosition(startPos);
+
+    // mGamepad の設定
+    mGamepad = new GamepadComponent(this);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_DOWN,
+                             SDL_SCANCODE_DOWN);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_DOWN,
+                             SDL_SCANCODE_S);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_UP,
+                             SDL_SCANCODE_UP);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_UP,
+                             SDL_SCANCODE_W);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_LEFT,
+                             SDL_SCANCODE_LEFT);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_LEFT,
+                             SDL_SCANCODE_A);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_RIGHT,
+                             SDL_SCANCODE_RIGHT);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_RIGHT,
+                             SDL_SCANCODE_D);
+    mGamepad->addKeyboardMap(GamepadComponent::BUTTON_START,
+                             SDL_SCANCODE_SPACE);
 }
