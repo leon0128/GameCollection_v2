@@ -1,6 +1,7 @@
 #include "board.hpp"
 #include "../main/controller.hpp"
 #include "setting.hpp"
+#include "tile.hpp"
 
 _2048::Board::Board(Controller* controller):
     Actor(controller),
@@ -11,6 +12,45 @@ _2048::Board::Board(Controller* controller):
 }
 
 void _2048::Board::initialize(Setting* setting)
+{
+    loadBoard(setting);
+
+    mGameState = std::vector<Tile*>(mSquared * mSquared,
+                                    nullptr);
+}
+
+Vector2 _2048::Board::getGridPosition(Tile* tile) const
+{
+    // mGameState 内の tile の取得
+    size_t index = mGameState.size();
+    for(size_t i = 0; i < mGameState.size(); i++)
+    {
+        if(mGameState.at(i) == tile)
+        {
+            index = i;
+            break;
+        }
+    }
+    if(index == mGameState.size())
+    {
+        SDL_Log("The specified Tile does not exist");
+        return Vector2(0.0f, 0.0f);
+    }
+
+    Vector2 position;
+    // x
+    position.x = getPosition().x -
+                 mBaseSize.x / 2.0f +
+                 mBaseSize.x / mSquared * (0.5f + index % mSquared);
+    // y
+    position.y = getPosition().y -
+                 mBaseSize.y / 2.0f +
+                 mBaseSize.y / mSquared * (0.5f + static_cast<int>(index / mSquared));
+
+    return position;
+}
+
+void _2048::Board::loadBoard(Setting* setting)
 {
     SDL_Color baseColor  = {55, 55, 55, 255};
     SDL_Color frameColor = {150, 150, 150, 255};
@@ -29,8 +69,8 @@ void _2048::Board::initialize(Setting* setting)
                            10);
 
     // 枠の作成
-    int mSquared = setting->get(Setting::BOARD_SIZE);
-    float width = mBaseSize.x / 400.0f * (45.0f / squared - 2.5f);
+    mSquared = setting->get(Setting::BOARD_SIZE);
+    float width = mBaseSize.x / 400.0f * (45.0f / mSquared - 2.5f);
     float space = mBaseSize.x / mSquared;
     Vector2 temp;
     for(int i = 0; i < mSquared + 1; i++)
@@ -55,17 +95,18 @@ void _2048::Board::initialize(Setting* setting)
     }
 }
 
-Vector2 _2048::Board::getGridPosition(const Coordinate2& coord) const
+bool _2048::Board::generateTile()
 {
-    Vector2 position;
-    // x
-    position.x = getPosition().x -
-                 mBaseSize.x / 2.0f +
-                 mBaseSize.x / mSquared * (0.5f + coord.x);
-    // y
-    position.y = getPosition().y -
-                 mBaseSize.y / 2.0f +
-                 mBaseSize.y / mSquared * (0.5f + coord.y);
-
-    return position;
+    // 空いている位置の調査
+    std::vector<size_t> emptyCellIndices;
+    for(size_t i = 0; i < mGameState.size(); i++)
+    {
+        if(!mGameState.at(i))
+            emptyCellIndices.emplace_back(i);
+    }
+    if(emptyCellIndices.empty())
+        return false;
+    
+    // ランダムな位置に Tile の作成
+    int index = Random::RANDOM(emptyCellIndices.size());
 }

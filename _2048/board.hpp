@@ -16,9 +16,12 @@ public:
     void initialize(class Setting* setting);
 
     // Coordinate に対応する位置を返す
-    Vector2 getGridPosition(const Coordinate2& coord) const;
+    Vector2 getGridPosition(class Tile* tile) const;
 
 private:
+    // initialize() で実行
+    void loadBoard(class Setting* setting); // ボードの枠の作成
+
     // mGameState の空いている位置にTile の作成
     bool generateTile();
 

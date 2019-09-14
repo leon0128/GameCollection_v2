@@ -115,7 +115,7 @@ void _2048::Setting::updateStrings()
                 limitTime = std::to_string(get(index));
             else
                 limitTime = "--";
-                
+
             mStrings.at(index)->setString(limitTime + "seconds");
             break;
         }
@@ -164,7 +164,7 @@ void _2048::Setting::loadComponents()
     SDL_Color bgColor = {0, 0, 0, 200};
     SDL_Color titleColor = {220, 220, 220, 255};
     SDL_Color strColor = {255, 255, 255, 255};
-    Vector2 bgSize(400, 300);
+    Vector2 bgSize(500, 300);
 
     Font::ESize titleFont = Font::SIZE_50;
     Font::ESize attriFont = Font::SIZE_30;
@@ -199,7 +199,7 @@ void _2048::Setting::loadComponents()
     // 属性、属性値
     for(size_t i = 0; i < outputString.size(); i++)
     {
-        Vector2 position(bgSize.x / (-4.0f),
+        Vector2 position(bgSize.x / (-3.5f),
                          bgSize.y / 2.0f - attriSpace * i - titleSpace);
 
         StringComponent* string = new StringComponent(this,
