@@ -18,6 +18,9 @@ public:
     // Coordinate に対応する位置を返す
     Vector2 getGridPosition(class Tile* tile) const;
 
+    // メンバ変数の取得
+    int getSquared() const {return mSquared;}
+    const Vector2& getBaseSize() const {return mBaseSize;}
 private:
     // initialize() で実行
     void loadBoard(class Setting* setting); // ボードの枠の作成

@@ -17,6 +17,9 @@ void _2048::Board::initialize(Setting* setting)
 
     mGameState = std::vector<Tile*>(mSquared * mSquared,
                                     nullptr);
+    
+    generateTile();
+    generateTile();
 }
 
 Vector2 _2048::Board::getGridPosition(Tile* tile) const
@@ -80,7 +83,7 @@ void _2048::Board::loadBoard(Setting* setting)
         RectangleComponent* parallel = new RectangleComponent(this,
                                                                temp,
                                                                frameColor,
-                                                               50);
+                                                               80);
         temp.set(0.0f, space * i - mBaseSize.x / 2.0f);
         parallel->setRelativePosition(temp);
 
@@ -89,7 +92,7 @@ void _2048::Board::loadBoard(Setting* setting)
         RectangleComponent* vertical = new RectangleComponent(this,
                                                               temp,
                                                               frameColor,
-                                                              50);
+                                                              80);
         temp.set(space * i - size.x / 2.0f, 0.0f);
         vertical->setRelativePosition(temp);
     }
@@ -109,4 +112,10 @@ bool _2048::Board::generateTile()
     
     // ランダムな位置に Tile の作成
     int index = Random::RANDOM(emptyCellIndices.size());
+    int score = (Random::RANDOM(10) % 9 != 0) ? 1 : 2;
+    mGameState.at(emptyCellIndices.at(index)) = new Tile(getController(), 
+                                                         this,
+                                                         score);
+
+    return true;
 }
