@@ -17,7 +17,7 @@ public:
 private:
     std::vector<class Tile*> mGameState; // ゲームの状態
 
-    Vector2 mBoardSize; // Board の大きさ
+    Vector2 mBaseSize; // Board の大きさ
 };
 
 };
