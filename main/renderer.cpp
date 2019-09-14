@@ -210,7 +210,7 @@ Texture* Renderer::getCharTexture(Font::ESize size,
 
 void Renderer::addSprite(SpriteComponent* sprite)
 {
-    int order = sprite->getOrder();
+    int order = sprite->getDrawOrder();
 
     // 挿入位置の捜査
     auto iterator = mSprites.begin();
@@ -218,7 +218,7 @@ void Renderer::addSprite(SpriteComponent* sprite)
         iterator != mSprites.end();
         iterator++)
     {
-        if(order < (*iterator)->getOrder())
+        if(order < (*iterator)->getDrawOrder())
             break;
     }
 

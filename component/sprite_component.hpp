@@ -14,6 +14,7 @@ public:
     virtual void draw() = 0;
 
     // メンバ変数の取得
+    int getDrawOrder() const {return mDrawOrder;}
     const Vector2& getSize() const {return mSize;}
     void setRelativePosition(Vector2& position){mRelativePosition = position;}
 
