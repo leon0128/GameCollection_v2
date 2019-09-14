@@ -49,6 +49,7 @@ void StringComponent::draw()
                               Matrix4::createTranslation(Vector3(offset + getRelativePosition().x,
                                                                  getRelativePosition().y,
                                                                  0.0f));
+        worldMatrix *= Matrix4::createScale(getScale());
     
         offset += mStringTexture.at(i)->getSize().x;
 

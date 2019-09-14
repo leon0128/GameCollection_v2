@@ -15,6 +15,8 @@ public:
 
     // メンバ変数の取得
     int getDrawOrder() const {return mDrawOrder;}
+    void setScale(float scale){mScale = scale;}
+    float getScale() const {return mScale;}
     const Vector2& getSize() const {return mSize;}
     void setRelativePosition(Vector2& position){mRelativePosition = position;}
 
@@ -27,6 +29,7 @@ protected:
 private:
     class Renderer* mRenderer; // レンダラー
     int mDrawOrder;            // 描画優先度
+    float mScale;              // 大きさ
     Vector2 mSize;             // 大きさ
     Vector2 mRelativePosition; // Actor からの相対位置
 };

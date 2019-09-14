@@ -8,6 +8,7 @@ SpriteComponent::SpriteComponent(Actor* actor,
                                  int drawOrder):
     Component(actor),
     mDrawOrder(drawOrder),
+    mScale(1.0f),
     mSize(),
     mRelativePosition()
 {

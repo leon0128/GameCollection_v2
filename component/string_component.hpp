@@ -19,7 +19,7 @@ public:
     void setString(const std::string& string);
     void setColor(const SDL_Color& color){mColor = color;}
     void setBackGroundColor(const SDL_Color& color){mBackGroundColor = color;}
-
+    void setFontSize(Font::ESize size){mFontSize = size;}
 private:
     std::vector<class Texture*> mStringTexture; // 描画する文字列 Texture
 

@@ -9,7 +9,7 @@ class RectangleComponent : public SpriteComponent
 public:
     RectangleComponent(class Actor* actor,
                        Vector2& size,
-                       SDL_Color& color,
+                       const SDL_Color& color,
                        int drawOrder = 100);
 
     void draw() override;

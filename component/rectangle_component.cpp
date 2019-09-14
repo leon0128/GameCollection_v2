@@ -5,7 +5,7 @@
 
 RectangleComponent::RectangleComponent(Actor* actor,
                                        Vector2& size,
-                                       SDL_Color& color,
+                                       const SDL_Color& color,
                                        int drawOrder):
     SpriteComponent(actor, drawOrder),
     mColor()
@@ -25,6 +25,7 @@ void RectangleComponent::draw()
                         getRelativePosition().y,
                         0.0f);
     worldMatrix *= Matrix4::createTranslation(relativePos);
+    worldMatrix *= Matrix4::createScale(getScale());
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::RECTANGLE);
