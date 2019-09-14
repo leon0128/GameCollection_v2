@@ -17,6 +17,8 @@ private:
     // mSetting を参考に各種オブジェクトの作成
     void initialize();
 
+    std::vector<class Board*> mBoards; // Board class
+
     class Setting* mSetting; // Setting クラス
 
     bool mIsInitialized; // 初期化したか(initialize() を実行したか)

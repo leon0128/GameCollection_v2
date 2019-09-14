@@ -28,6 +28,8 @@ public:
     void setState(EState state){mState = state;}
     EState getState() const {return mState;}
     const Matrix4& getWorldTransform() const {return mWorldTransform;}
+    void setPosition(const Vector3& position){mPosition = position;}
+    const Vector3& getPosition() const {return mPosition;}
     void setClear(float clear){mClear = clear;}
     float getClear() const {return mClear;}
  
