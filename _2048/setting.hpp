@@ -29,6 +29,9 @@ public:
     // 各要素の値の取得
     int get(EIndices index) const;
 
+    // mIsCompleted の取得
+    bool isCompleted() const {return mIsCompleted;}
+
 private:
     void updateActor(float deltaTime) override;
 

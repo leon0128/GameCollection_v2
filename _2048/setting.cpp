@@ -99,13 +99,23 @@ void _2048::Setting::updateStrings()
         }
         case(MAX_SCORE):
         {
-            std::string maxScore = std::to_string(static_cast<int>(std::pow(2.0f, get(MAX_SCORE))));
+            std::string maxScore;
+            if(get(index) != 0)
+                maxScore = std::to_string(static_cast<int>(std::pow(2.0f, get(MAX_SCORE))));
+            else
+                maxScore = "--";
+
             mStrings.at(index)->setString(maxScore + " points");
             break;
         }
         case(TIME_LIMIT):
         {
-            std::string limitTime = std::to_string(get(index));
+            std::string limitTime;
+            if(get(index) != 0)
+                limitTime = std::to_string(get(index));
+            else
+                limitTime = "--";
+                
             mStrings.at(index)->setString(limitTime + "seconds");
             break;
         }
