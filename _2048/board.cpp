@@ -5,9 +5,9 @@
 _2048::Board::Board(Controller* controller):
     Actor(controller),
     mGameState(),
+    mSquared(0),
     mBaseSize()
 {
-
 }
 
 void _2048::Board::initialize(Setting* setting)
@@ -29,11 +29,11 @@ void _2048::Board::initialize(Setting* setting)
                            10);
 
     // 枠の作成
-    int squared = setting->get(Setting::BOARD_SIZE);
+    int mSquared = setting->get(Setting::BOARD_SIZE);
     float width = mBaseSize.x / 400.0f * (45.0f / squared - 2.5f);
-    float space = mBaseSize.x / squared;
+    float space = mBaseSize.x / mSquared;
     Vector2 temp;
-    for(int i = 0; i < squared + 1; i++)
+    for(int i = 0; i < mSquared + 1; i++)
     {
         // 平行な枠
         temp.set(mBaseSize.x, width);
@@ -53,4 +53,19 @@ void _2048::Board::initialize(Setting* setting)
         temp.set(space * i - size.x / 2.0f, 0.0f);
         vertical->setRelativePosition(temp);
     }
+}
+
+Vector2 _2048::Board::getGridPosition(const Coordinate2& coord) const
+{
+    Vector2 position;
+    // x
+    position.x = getPosition().x -
+                 mBaseSize.x / 2.0f +
+                 mBaseSize.x / mSquared * (0.5f + coord.x);
+    // y
+    position.y = getPosition().y -
+                 mBaseSize.y / 2.0f +
+                 mBaseSize.y / mSquared * (0.5f + coord.y);
+
+    return position;
 }
