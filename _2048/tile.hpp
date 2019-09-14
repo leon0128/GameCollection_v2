@@ -18,6 +18,14 @@ public:
          int score);
     ~Tile(){}
 
+    // mScore を +1, mIsJoined を true
+    void join(){mScore++; 
+                mIsJoined = true;}
+    
+    // メンバ変数の取得
+    int getScore() const {return mScore;}
+    bool isJoined() const {return mIsJoined;}
+
 private:
     void updateActor(float deltaTime) override;
 
@@ -25,6 +33,8 @@ private:
     int mScore;          // 指数
     RectangleComponent* mRectangle; // 矩形
     StringComponent* mString;       // 文字
+
+    bool mIsJoined; // フレーム内で結合したか
 };
 
 };

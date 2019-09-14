@@ -7,14 +7,15 @@ _2048::Board::Board(Controller* controller):
     Actor(controller),
     mGameState(),
     mSquared(0),
-    mBaseSize()
+    mBaseSize(),
+    mGamepad(nullptr)
 {
 }
 
 void _2048::Board::initialize(Setting* setting)
 {
     loadBoard(setting);
-
+    mGamepad = new GamepadComponent(this);
     mGameState = std::vector<Tile*>(mSquared * mSquared,
                                     nullptr);
     
@@ -51,6 +52,20 @@ Vector2 _2048::Board::getGridPosition(Tile* tile) const
                  mBaseSize.y / mSquared * (0.5f + static_cast<int>(index / mSquared));
 
     return position;
+}
+
+void _2048::Board::updateActor(float deltaTime)
+{
+    bool isGenerated = true;
+    bool isMoved = moveTile();
+
+    if(isMoved)
+    {
+        joinTile();
+        isGenerated = generateTile();
+    }
+    if(!isGenerated)
+        SDL_Log("gameover");
 }
 
 void _2048::Board::loadBoard(Setting* setting)
@@ -96,6 +111,25 @@ void _2048::Board::loadBoard(Setting* setting)
         temp.set(space * i - size.x / 2.0f, 0.0f);
         vertical->setRelativePosition(temp);
     }
+}
+
+bool _2048::Board::moveTile()
+{
+    int vertical = 0, parallel = 0;
+    if(mGamepad->at(GamepadComponent::BUTTON_UP) == 1)
+        vertical++;
+    if(mGamepad->at(GamepadComponent::BUTTON_DOWN) == 1)
+        vertical--;
+    if(mGamepad->at(GamepadComponent::BUTTON_RIGHT) == 1)
+        parallel++;
+    if(mGamepad->at(GamepadComponent::BUTTON_LEFT) == 1)
+        parallel--;
+    
+    if(vertical != 0 && parallel != 0)
+        return false;
+
+    bool isMoved = false;
+    
 }
 
 bool _2048::Board::generateTile()

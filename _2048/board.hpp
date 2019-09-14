@@ -2,6 +2,7 @@
 
 #include "../main/actor.hpp"
 #include "../component/rectangle_component.hpp"
+#include "../component/gamepad_component.hpp"
 
 namespace _2048
 {
@@ -21,17 +22,24 @@ public:
     // メンバ変数の取得
     int getSquared() const {return mSquared;}
     const Vector2& getBaseSize() const {return mBaseSize;}
-private:
-    // initialize() で実行
-    void loadBoard(class Setting* setting); // ボードの枠の作成
+    GamepadComponent* getGamepad(){return mGamepad;}
 
-    // mGameState の空いている位置にTile の作成
-    bool generateTile();
+private:
+    void updateActor(float deltaTime) override;
+
+    // initialize() で実行
+    void loadBoard(class Setting* setting);   // ボードの枠の作成
+
+    // updateActor() で実行
+    bool moveTile();     // 移動(動いたらtrue)
+    void joinTile();     // Tile の結合(moveTile() が true なら)
+    bool generateTile(); // mGameState の空いている位置にTile の作成
 
     std::vector<class Tile*> mGameState; // ゲームの状態
 
     int mSquared;      // 列（行）の要素数
     Vector2 mBaseSize; // Board の大きさ
+    GamepadComponent* mGamepad; // ゲームパッド
 };
 
 };

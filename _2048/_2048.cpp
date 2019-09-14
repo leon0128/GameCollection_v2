@@ -50,5 +50,30 @@ void _2048::_2048::initialize()
                     mSetting->get(Setting::NUM_PLAYER));
     }
 
+    // Board::mGamepad の設定
+    GamepadComponent* gamepad = mBoards.front()->getGamepad();
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_UP,
+                            SDL_SCANCODE_W);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_DOWN,
+                            SDL_SCANCODE_S);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_LEFT,
+                            SDL_SCANCODE_A);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_RIGHT,
+                            SDL_SCANCODE_D);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_HOME,
+                            SDL_SCANCODE_SPACE);
+    
+    gamepad = mBoards.back()->getGamepad();
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_UP,
+                            SDL_SCANCODE_UP);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_DOWN,
+                            SDL_SCANCODE_DOWN);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_LEFT,
+                            SDL_SCANCODE_LEFT);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_RIGHT,
+                            SDL_SCANCODE_RIGHT);
+    gamepad->addKeyboardMap(GamepadComponent::BUTTON_HOME,
+                            SDL_SCANCODE_SPACE);
+
     mIsInitialized = true;
 }

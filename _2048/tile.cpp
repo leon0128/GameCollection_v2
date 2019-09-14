@@ -40,7 +40,8 @@ _2048::Tile::Tile(Controller* controller,
     mOwner(owner),
     mScore(score),
     mRectangle(nullptr),
-    mString(nullptr)
+    mString(nullptr),
+    mIsJoined(false)
 {
     Vector2 size(owner->getBaseSize().x / owner->getSquared(),
                  owner->getBaseSize().y / owner->getSquared());
@@ -56,6 +57,8 @@ _2048::Tile::Tile(Controller* controller,
 
 void _2048::Tile::updateActor(float deltaTime)
 {
+    mIsJoined = false;
+
     Vector2 position = mOwner->getGridPosition(this);
 
     mRectangle->setRelativePosition(position);
