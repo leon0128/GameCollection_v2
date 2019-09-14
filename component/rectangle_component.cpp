@@ -24,8 +24,8 @@ void RectangleComponent::draw()
     Vector3 relativePos(getRelativePosition().x,
                         getRelativePosition().y,
                         0.0f);
+    worldMatrix *= Matrix4::createScale(getScale());                        
     worldMatrix *= Matrix4::createTranslation(relativePos);
-    worldMatrix *= Matrix4::createScale(getScale());
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::RECTANGLE);
