@@ -177,8 +177,8 @@ bool _2048::Board::moveTile(int vertical, int parallel)
 
     for(size_t i = 0; i < mGameState.size(); i++)
     {
-        if(mGameState.at(i) && !lastState.at(i) ||
-           !mGameState.at(i) && lastState.at(i))
+        if((mGameState.at(i) && !lastState.at(i)) ||
+           (!mGameState.at(i) && lastState.at(i)))
             return true;
     }
     

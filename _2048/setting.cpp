@@ -194,7 +194,7 @@ void _2048::Setting::loadComponents()
                                  setting,
                                  titleFont);
     title->setRelativePosition(settingPos);
-    title->setColor(strColor);
+    title->setColor(titleColor);
 
     // 属性、属性値
     for(size_t i = 0; i < outputString.size(); i++)
