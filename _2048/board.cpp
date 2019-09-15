@@ -56,16 +56,23 @@ Vector2 _2048::Board::getGridPosition(Tile* tile) const
 
 void _2048::Board::updateActor(float deltaTime)
 {
-    bool isGenerated = true;
-    bool isMoved = moveTile();
+    // 水平方向と垂直方向の移動
+    int vertical = 0, parallel = 0;
 
-    if(isMoved)
+    if(input(vertical, parallel))
     {
-        joinTile();
-        isGenerated = generateTile();
+        // 移動と結合の実行
+        bool isMoved  = moveTile(vertical, parallel);
+        bool isJoined = joinTile(vertical, parallel);
+
+        // mGameState の状態が変わったら generateTile() の実行
+        if(isMoved || isJoined)
+            generateTile();
     }
-    if(!isGenerated)
-        SDL_Log("gameover");
+
+    // ゲームオーバーの確認
+    if(isGameover())
+        SDL_Log("====GAMEOVER====");
 }
 
 void _2048::Board::loadBoard(Setting* setting)
@@ -113,23 +120,24 @@ void _2048::Board::loadBoard(Setting* setting)
     }
 }
 
-bool _2048::Board::moveTile()
+bool _2048::Board::input(int& vertical, int& parallel) const
 {
-    int vertical = 0, parallel = 0;
-    if(mGamepad->at(GamepadComponent::BUTTON_UP) == 1)
-        vertical++;
-    if(mGamepad->at(GamepadComponent::BUTTON_DOWN) == 1)
-        vertical--;
-    if(mGamepad->at(GamepadComponent::BUTTON_RIGHT) == 1)
-        parallel++;
-    if(mGamepad->at(GamepadComponent::BUTTON_LEFT) == 1)
-        parallel--;
-    
-    if(vertical != 0 && parallel != 0)
-        return false;
+    return true;
+}
 
-    bool isMoved = false;
-    
+bool _2048::Board::moveTile(int verticall, int parallel)
+{
+    return true;
+}
+
+bool _2048::Board::joinTile(int vertical, int parallel)
+{
+    return true;
+}
+
+bool _2048::Board::isGameover() const
+{
+    return true;
 }
 
 bool _2048::Board::generateTile()

@@ -31,9 +31,11 @@ private:
     void loadBoard(class Setting* setting);   // ボードの枠の作成
 
     // updateActor() で実行
-    bool moveTile();     // 移動(動いたらtrue)
-    void joinTile();     // Tile の結合(moveTile() が true なら)
-    bool generateTile(); // mGameState の空いている位置にTile の作成
+    bool input(int& vertical, int& parallel) const; // 動作するならtrue
+    bool moveTile(int vertical, int parallel);      // タイルの移動 移動したら true
+    bool joinTile(int vertical, int parallel);      // タイルの結合 結合したら true
+    bool isGameover() const; // Gameover かの確認
+    bool generateTile();     // mGameState の空いている位置にTile の作成
 
     std::vector<class Tile*> mGameState; // ゲームの状態
 
