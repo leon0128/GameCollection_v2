@@ -122,6 +122,19 @@ void _2048::Board::loadBoard(Setting* setting)
 
 bool _2048::Board::input(int& vertical, int& parallel) const
 {
+    if(mGamepad->at(GamepadComponent::BUTTON_UP) == 1)
+        vertical++;
+    if(mGamepad->at(GamepadComponent::BUTTON_DOWN) == 1)
+        vertical--;
+    if(mGamepad->at(GamepadComponent::BUTTON_RIGHT) == 1)
+        parallel++;
+    if(mGamepad->at(GamepadComponent::BUTTON_LEFT) == 1)
+        parallel--;
+    
+    if((vertical != 0 && parallel != 0) ||
+       (vertical == 0 && parallel == 0))
+        return false;
+
     return true;
 }
 
