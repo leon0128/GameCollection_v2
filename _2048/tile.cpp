@@ -4,7 +4,7 @@
 
 const std::unordered_map<int, SDL_Color> _2048::Tile::COLOR_MAP{{ 1, {250, 250, 210, 255}},
                                                                 { 2, {245, 222, 179, 255}},
-                                                                { 3, {222, 184, 135, 255}},
+                                                                { 3, {232, 184, 135, 255}},
                                                                 { 4, {210, 180, 140, 255}},
                                                                 { 5, {240, 230, 140, 255}},
                                                                 { 6, {255, 255,   0, 255}},
@@ -43,11 +43,13 @@ _2048::Tile::Tile(Controller* controller,
     mString(nullptr),
     mIsJoined(false)
 {
+    SDL_Color zero = {0, 0, 0, 0};
+
     Vector2 size(owner->getBaseSize().x / owner->getSquared(),
                  owner->getBaseSize().y / owner->getSquared());
     mRectangle = new RectangleComponent(this,
                                         size,
-                                        COLOR_MAP.at(score),
+                                        zero,
                                         30);
     std::string none;
     mString = new StringComponent(this,
