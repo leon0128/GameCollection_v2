@@ -35,8 +35,8 @@ void StringComponent::draw()
     Shader* shader = getActor()->getController()->getGame()->getRenderer()->getShader(Renderer::STRING);
 
 
-    float offset = getSize().x / 2.0f * (-1.0f) +
-                   mStringTexture.at(0)->getSize().x / 2.0f;
+    float offset = getSize().x * getScale() / 2.0f * (-1.0f) +
+                   mStringTexture.at(0)->getSize().x * getScale() / 2.0f;
     
     for(size_t i = 0; i < mStringTexture.size(); i++)
     {
@@ -51,7 +51,7 @@ void StringComponent::draw()
                                                                  getRelativePosition().y,
                                                                  0.0f));
     
-        offset += mStringTexture.at(i)->getSize().x;
+        offset += mStringTexture.at(i)->getSize().x * getScale();
 
         shader->setActive();
         shader->setUniform("uWorldTransform",
