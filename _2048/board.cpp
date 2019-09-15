@@ -47,8 +47,8 @@ Vector2 _2048::Board::getGridPosition(Tile* tile) const
                  mBaseSize.x / 2.0f +
                  mBaseSize.x / mSquared * (0.5f + index % mSquared);
     // y
-    position.y = getPosition().y -
-                 mBaseSize.y / 2.0f +
+    position.y = getPosition().y +
+                 mBaseSize.y / 2.0f -
                  mBaseSize.y / mSquared * (0.5f + static_cast<int>(index / mSquared));
 
     return position;
@@ -67,12 +67,12 @@ void _2048::Board::updateActor(float deltaTime)
 
         // mGameState の状態が変わったら generateTile() の実行
         if(isMoved || isJoined)
+        {
             generateTile();
+            if(isGameover())
+                SDL_Log("gameover");
+        }
     }
-
-    // ゲームオーバーの確認
-    if(isGameover())
-        SDL_Log("====GAMEOVER====");
 }
 
 void _2048::Board::loadBoard(Setting* setting)
@@ -138,8 +138,32 @@ bool _2048::Board::input(int& vertical, int& parallel) const
     return true;
 }
 
-bool _2048::Board::moveTile(int verticall, int parallel)
+bool _2048::Board::moveTile(int vertical, int parallel)
 {
+    SDL_Log("===");
+    for(int i = 0; i < mSquared; i++)
+    {
+        int numEmpty = 0;
+        for(int j = 0; j < mSquared; j++)
+        {
+            size_t index = 0;
+            if(vertical == 1)
+                index = mSquared * j + i;
+            else if(vertical == -1)
+                index = mSquared * mSquared - 1 - mSquared * j - i;
+            else if(parallel == 1)
+                index = mSquared * mSquared - 1 - j - i * mSquared;
+            else if(parallel == -1)
+                index = j + i * mSquared;
+            
+            SDL_Log("%d", index);
+
+            if(!mGameState.at(index))
+                numEmpty++;
+        }
+        SDL_Log("numEmpty: %d", numEmpty);
+    }
+
     return true;
 }
 
