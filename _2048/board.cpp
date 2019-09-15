@@ -140,31 +140,48 @@ bool _2048::Board::input(int& vertical, int& parallel) const
 
 bool _2048::Board::moveTile(int vertical, int parallel)
 {
-    SDL_Log("===");
+    // 変化前
+    std::vector<bool> lastState(mSquared * mSquared,
+                                false);
+    for(size_t i = 0; i < mGameState.size(); i++)
+        lastState.at(i) = mGameState.at(i) ? true : false;
+
     for(int i = 0; i < mSquared; i++)
     {
         int numEmpty = 0;
         for(int j = 0; j < mSquared; j++)
         {
             size_t index = 0;
+            int diff = 0;
             if(vertical == 1)
-                index = mSquared * j + i;
+                index = mSquared * j + i,
+                diff = -1 * mSquared;
             else if(vertical == -1)
-                index = mSquared * mSquared - 1 - mSquared * j - i;
+                index = mSquared * mSquared - 1 - mSquared * j - i,
+                diff = mSquared;
             else if(parallel == 1)
-                index = mSquared * mSquared - 1 - j - i * mSquared;
+                index = mSquared * mSquared - 1 - j - i * mSquared,
+                diff = 1;
             else if(parallel == -1)
-                index = j + i * mSquared;
-            
-            SDL_Log("%d", index);
+                index = j + i * mSquared,
+                diff = -1;
 
-            if(!mGameState.at(index))
+            if(mGameState.at(index))
+                std::iter_swap(mGameState.begin() + index,
+                               mGameState.begin() + index + diff * numEmpty);
+            else
                 numEmpty++;
         }
-        SDL_Log("numEmpty: %d", numEmpty);
     }
 
-    return true;
+    for(size_t i = 0; i < mGameState.size(); i++)
+    {
+        if(mGameState.at(i) && !lastState.at(i) ||
+           !mGameState.at(i) && lastState.at(i))
+            return true;
+    }
+    
+    return false;
 }
 
 bool _2048::Board::joinTile(int vertical, int parallel)
