@@ -67,7 +67,7 @@ void _2048::Board::updateActor(float deltaTime)
         bool isSecMoved = moveTile(vertical, parallel);
 
         // mGameState の状態が変わったら generateTile() の実行
-        if(isFirMoved || isSecMoved)
+        if(isFirMoved || isSecMoved || isJoined)
         {
             generateTile();
             if(isGameover())
@@ -187,6 +187,8 @@ bool _2048::Board::moveTile(int vertical, int parallel)
 
 bool _2048::Board::joinTile(int vertical, int parallel)
 {
+    bool isJoined = false;
+
     for(int i = 0; i < mSquared; i++)
     {
         for(int j = 0; j < mSquared - 1; j++)
@@ -218,15 +220,39 @@ bool _2048::Board::joinTile(int vertical, int parallel)
                 mGameState.at(index)->join();
                 mGameState.at(index + diff)->setState(Actor::DEAD);
                 mGameState.at(index + diff) = nullptr;
+
+                isJoined = true;
             }
         }
     }
 
-    return true;
+    return isJoined;
 }
 
 bool _2048::Board::isGameover() const
 {
+    for(int i = 0; i < mSquared; i++)
+    {
+        int parScore = 0;
+        int verScore = 0;
+        for(int j = 0; j < mSquared; j++)
+        {
+            if(!mGameState.at(i * mSquared + j))
+                return false;
+            if(mGameState.at(i * mSquared + j)->getScore() == verScore)
+                return false;
+
+            verScore = mGameState.at(i * mSquared + j)->getScore();
+
+            if(!mGameState.at(i + mSquared * j))
+                return false;
+            if(mGameState.at(i + mSquared * j)->getScore() == parScore)
+                return false;
+
+            parScore = mGameState.at(i + mSquared * j)->getScore();
+        }
+    }
+
     return true;
 }
 
