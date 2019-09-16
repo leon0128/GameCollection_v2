@@ -116,7 +116,7 @@ void _2048::Setting::updateStrings()
             else
                 limitTime = "--";
 
-            mStrings.at(index)->setString(limitTime + "seconds");
+            mStrings.at(index)->setString(limitTime + " seconds");
             break;
         }
         case(SIZE):
@@ -155,8 +155,8 @@ void _2048::Setting::loadMap()
         mIndicesMap.emplace(index, 0);
 
     mIndicesMap.at(BOARD_SIZE) = 2;
-    mIndicesMap.at(MAX_SCORE)  = 5;
-    mIndicesMap.at(TIME_LIMIT) = 5;
+    mIndicesMap.at(MAX_SCORE)  = 0;
+    mIndicesMap.at(TIME_LIMIT) = 0;
 }
 
 void _2048::Setting::loadComponents()
@@ -178,9 +178,9 @@ void _2048::Setting::loadComponents()
     outputString.emplace_back("Board Size",
                               std::to_string(get(BOARD_SIZE)) + " * " + std::to_string(get(BOARD_SIZE)));
     outputString.emplace_back("Max Score",
-                              std::to_string(static_cast<int>(std::pow(2.0f, get(MAX_SCORE)))) + " points");
+                              "-- points");
     outputString.emplace_back("Time Limit",
-                              std::to_string(get(TIME_LIMIT)) + " seconds");
+                              "-- seconds");
 
     // 背景の矩形
     new RectangleComponent(this,

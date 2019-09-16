@@ -346,6 +346,10 @@ void _2048::Board::end(EState state)
             messageColor = {255, 255, 255, 255};
             filmMessage = "TIME UP";
             break;
+        default:
+            SDL_Log("The argument is incorrect: %d, %s",
+                    state,
+                    __PRETTY_FUNCTION__);
     }
 
     new RectangleComponent(this,
