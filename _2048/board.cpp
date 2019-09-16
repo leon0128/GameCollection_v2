@@ -6,6 +6,8 @@
 _2048::Board::Board(Controller* controller):
     Actor(controller),
     mGameState(),
+    mTimeLimit(0),
+    mGoalScore(0),
     mSquared(0),
     mBaseSize(),
     mGamepad(nullptr)
@@ -14,6 +16,9 @@ _2048::Board::Board(Controller* controller):
 
 void _2048::Board::initialize(Setting* setting)
 {
+    mTimeLimit = setting->get(Setting::TIME_LIMIT);
+    mGoalScore = setting->get(Setting::MAX_SCORE);
+
     loadBoard(setting);
     mGamepad = new GamepadComponent(this);
     mGameState = std::vector<Tile*>(mSquared * mSquared,
@@ -65,6 +70,13 @@ void _2048::Board::updateActor(float deltaTime)
         bool isFirMoved = moveTile(vertical, parallel);
         bool isJoined   = joinTile(vertical, parallel);
         bool isSecMoved = moveTile(vertical, parallel);
+
+        // ゲームクリアの確認
+        if(isJoined)
+        {
+            if(isGameclear())
+                SDL_Log("gameclear");
+        }
 
         // mGameState の状態が変わったら generateTile() の実行
         if(isFirMoved || isSecMoved || isJoined)
@@ -227,6 +239,20 @@ bool _2048::Board::joinTile(int vertical, int parallel)
     }
 
     return isJoined;
+}
+
+bool _2048::Board::isGameclear() const
+{
+    for(auto& tile : mGameState)
+    {
+        if(tile)
+        {
+            if(tile->getScore() == mGoalScore)
+                return true;
+        }
+    }
+
+    return false;
 }
 
 bool _2048::Board::isGameover() const
