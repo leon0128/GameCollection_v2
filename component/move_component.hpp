@@ -1,6 +1,8 @@
 #pragma once
 
 #include "component.hpp"
+#include "../main/mathematics.hpp"
+#include <SDL2/SDL.h>
 
 class MoveComponent : public Component
 {
@@ -16,8 +18,9 @@ public:
               float moveTime);
 
 private:
-    float mMoveTime;      // 目的地までの移動時間
-    Vector3 mDestination; // 目的地
+    float mMoveTime;   // 目的地までの移動時間
+    float mElapseTime; // 経過時間
+    Vector3 mDestination;       // 目的地
 
     bool mIsMoving; // 移動中かどうか
     bool mIsActive; // 移動するかどうか
