@@ -34,16 +34,18 @@ private:
     bool input(int& vertical, int& parallel) const; // 動作するならtrue
     bool moveTile(int vertical, int parallel);      // タイルの移動 移動したら true
     bool joinTile(int vertical, int parallel);      // タイルの結合 結合したら true
-    bool isGameclear() const; // 目標スコアに達したか
-    bool isGameover() const;  // Gameover かの確認
-    bool generateTile();      // mGameState の空いている位置にTile の作成
+    bool isGameclear() const;       // 目標スコアに達したか
+    bool isGameover() const;        // Gameover かの確認
+    bool isTimeUp(float deltaTime); // TimeUP かどうか
+    bool generateTile();            // mGameState の空いている位置にTile の作成
 
     std::vector<class Tile*> mGameState; // ゲームの状態
 
-    int mTimeLimit;    // タイムリミット[s]
-    int mGoalScore;    // 目標スコア
-    int mSquared;      // 列（行）の要素数
-    Vector2 mBaseSize; // Board の大きさ
+    int mTimeLimit;     // タイムリミット[s]
+    int mGoalScore;     // 目標スコア
+    int mSquared;       // 列（行）の要素数
+    float mElapsedTime; // 経過時間
+    Vector2 mBaseSize;  // Board の大きさ
     GamepadComponent* mGamepad; // ゲームパッド
 };
 

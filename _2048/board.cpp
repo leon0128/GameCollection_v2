@@ -9,6 +9,7 @@ _2048::Board::Board(Controller* controller):
     mTimeLimit(0),
     mGoalScore(0),
     mSquared(0),
+    mElapsedTime(0.0f),
     mBaseSize(),
     mGamepad(nullptr)
 {
@@ -86,6 +87,9 @@ void _2048::Board::updateActor(float deltaTime)
                 SDL_Log("gameover");
         }
     }
+
+    if(isTimeUp(deltaTime))
+        SDL_Log("timeup");
 }
 
 void _2048::Board::loadBoard(Setting* setting)
@@ -280,6 +284,15 @@ bool _2048::Board::isGameover() const
     }
 
     return true;
+}
+
+bool _2048::Board::isTimeUp(float deltaTime)
+{
+    if(static_cast<int>(mElapsedTime) > mTimeLimit)
+        return true;
+    
+    mElapsedTime += deltaTime;
+    return false;
 }
 
 bool _2048::Board::generateTile()
