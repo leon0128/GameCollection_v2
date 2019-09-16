@@ -6,6 +6,7 @@
 _2048::Board::Board(Controller* controller):
     Actor(controller),
     mGameState(),
+    mState(NONE),
     mTimeLimit(0),
     mGoalScore(0),
     mSquared(0),
@@ -76,7 +77,7 @@ void _2048::Board::updateActor(float deltaTime)
         if(isJoined)
         {
             if(isGameclear())
-                SDL_Log("gameclear");
+                end(CLEAR);
         }
 
         // mGameState の状態が変わったら generateTile() の実行
@@ -84,12 +85,12 @@ void _2048::Board::updateActor(float deltaTime)
         {
             generateTile();
             if(isGameover())
-                SDL_Log("gameover");
+                end(GAMEOVER);
         }
     }
 
     if(isTimeUp(deltaTime))
-        SDL_Log("timeup");
+        end(TIMEUP);
 }
 
 void _2048::Board::loadBoard(Setting* setting)
@@ -288,6 +289,9 @@ bool _2048::Board::isGameover() const
 
 bool _2048::Board::isTimeUp(float deltaTime)
 {
+    if(mTimeLimit == 0)
+        return false;
+
     if(static_cast<int>(mElapsedTime) > mTimeLimit)
         return true;
     
@@ -315,4 +319,48 @@ bool _2048::Board::generateTile()
                                                          score);
 
     return true;
+}
+
+void _2048::Board::end(EState state)
+{
+    mState = state;
+
+    SDL_Color filmColor;
+    SDL_Color messageColor;
+    std::string filmMessage;
+
+    switch(state)
+    {
+        case(CLEAR):
+            filmColor = {255, 255, 255, 200};
+            messageColor = {255, 140, 0, 255};
+            filmMessage = "CLEAR";
+            break;
+        case(GAMEOVER):
+            filmColor = {0, 0, 0, 200};
+            messageColor = {255, 255, 255, 255};
+            filmMessage = "GAMEOVER";
+            break;
+        case(TIMEUP):
+            filmColor = {0, 0, 0, 200};
+            messageColor = {255, 255, 255, 255};
+            filmMessage = "TIME UP";
+            break;
+    }
+
+    new RectangleComponent(this,
+                           mBaseSize,
+                           filmColor,
+                           130);
+    new StringComponent(this,
+                        filmMessage,
+                        Font::SIZE_100,
+                        150);
+    StringComponent* string = new StringComponent(this,
+                                                  filmMessage,
+                                                  Font::SIZE_100,
+                                                  150);
+    string->setColor(messageColor);
+
+    setState(Actor::EState::PAUSED);
 }

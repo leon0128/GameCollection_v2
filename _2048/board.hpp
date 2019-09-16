@@ -10,6 +10,15 @@ namespace _2048
 class Board : public Actor
 {
 public:
+    // ゲーム終了時の状態
+    enum EState
+    {
+        NONE,
+        CLEAR,
+        GAMEOVER,
+        TIMEUP
+    };
+
     Board(class Controller* controller);
     ~Board(){}
 
@@ -39,8 +48,12 @@ private:
     bool isTimeUp(float deltaTime); // TimeUP かどうか
     bool generateTile();            // mGameState の空いている位置にTile の作成
 
+    // ゲーム終了時に呼び出す
+    void end(EState state);
+
     std::vector<class Tile*> mGameState; // ゲームの状態
 
+    EState mState;      // 状態
     int mTimeLimit;     // タイムリミット[s]
     int mGoalScore;     // 目標スコア
     int mSquared;       // 列（行）の要素数
