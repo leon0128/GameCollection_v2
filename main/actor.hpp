@@ -30,6 +30,9 @@ public:
     const Matrix4& getWorldTransform() const {return mWorldTransform;}
     void setPosition(const Vector3& position){mPosition = position; mIsRecomputedWorldTransform = true;}
     const Vector3& getPosition() const {return mPosition;}
+    const Quaternion& getRotation() const {return mRotation;}
+    void setScale(float scale){mScale = scale;}
+    float getScale() const {return mScale;}
     void setClear(float clear){mClear = clear;}
     float getClear() const {return mClear;}
  

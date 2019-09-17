@@ -63,6 +63,8 @@ void _2048::Tile::updateActor(float deltaTime)
 
     Vector2 position = mOwner->getGridPosition(this);
 
+    // Vector3 newPos(position.x, position.y, 0.0f);
+    // setPosition(newPos);
     mRectangle->setRelativePosition(position);
     mRectangle->setColor(COLOR_MAP.at(mScore));
 

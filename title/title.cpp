@@ -3,6 +3,7 @@
 #include "../component/texture_component.hpp"
 #include "../component/rectangle_component.hpp"
 #include "../component/move_component.hpp"
+#include "../component/string_component.hpp"
 
 Title::Title::Title(Controller* controller):
     Actor(controller),
@@ -25,6 +26,10 @@ Title::Title::Title(Controller* controller):
     Vector3 destination(300.0f, 300.0f, 0.0f);
     MoveComponent* move = new MoveComponent(this);
     move->move(destination, 10.0f);
+
+    std::string str("a");
+    new StringComponent(this,
+                        str);
 }
 
 void Title::Title::updateActor(float deltaTime)
