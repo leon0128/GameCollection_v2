@@ -16,23 +16,17 @@ RectangleComponent::RectangleComponent(Actor* actor,
 
 void RectangleComponent::draw()
 {
-    // ワールド空間に変換
-    Matrix4 scaleMatrix = Matrix4::createScale(getSize().x,
-                                               getSize().y,
-                                               1.0f);
-    Matrix4 worldMatrix = scaleMatrix * getActor()->getWorldTransform();
-    Vector3 relativePos(getRelativePosition().x,
-                        getRelativePosition().y,
-                        0.0f);
-    worldMatrix *= Matrix4::createScale(getScale());                        
-    worldMatrix *= Matrix4::createTranslation(relativePos);
+    Vector3 relation(getRelativePosition().x, getRelativePosition().y, 0.0f);
+    Matrix4 worldTransform = Matrix4::createScale(getActor()->getScale()) * Matrix4::createScale(Vector3(getSize().x, getSize().y, 1.0f));
+    worldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());
+    worldTransform *= Matrix4::createTranslation(getActor()->getPosition() + relation);
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::RECTANGLE);
     shader->setActive();
     shader->setUniform("uWorldTransform",
                        Shader::MATRIX4,
-                       &worldMatrix);
+                       &worldTransform);
     shader->setUniform("uFilledColor",
                        Shader::COLOR,
                        &mColor);
