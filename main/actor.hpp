@@ -28,14 +28,20 @@ public:
     void setState(EState state){mState = state;}
     EState getState() const {return mState;}
     const Matrix4& getWorldTransform() const {return mWorldTransform;}
-    void setPosition(const Vector3& position){mPosition = position; mIsRecomputedWorldTransform = true;}
+    void setPosition(const Vector3& position){mPosition = position;
+                                              mIsRecomputedWorldTransform = true;}
     const Vector3& getPosition() const {return mPosition;}
+    void setRotation(const Quaternion& rotation){mRotation = rotation;
+                                                 mIsRecomputedWorldTransform = true;}
     const Quaternion& getRotation() const {return mRotation;}
-    void setScale(float scale){mScale = scale;}
+    void setScale(float scale){mScale = scale;
+                               mIsRecomputedWorldTransform = true;}
     float getScale() const {return mScale;}
     void setClear(float clear){mClear = clear;}
     float getClear() const {return mClear;}
  
+    bool isRecomputedWorldTransform() const {return mIsRecomputedWorldTransform;}
+
     // SpriteComponent で Renderer を取得するために一時的に実装
     // 解決策が見つかったら削除予定
     class Controller* getController() const {return mController;}

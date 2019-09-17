@@ -314,10 +314,18 @@ bool _2048::Board::generateTile()
     // ランダムな位置に Tile の作成
     int index = Random::RANDOM(emptyCellIndices.size());
     int score = (Random::RANDOM(10) % 9 != 0) ? 1 : 2;
-    mGameState.at(emptyCellIndices.at(index)) = new Tile(getController(), 
-                                                         this,
-                                                         score);
+    
+    Tile* tile = new Tile(getController(),
+                          this,
+                          score);
+    mGameState.at(emptyCellIndices.at(index)) = tile;
 
+    Vector2 gridPos = getGridPosition(tile);
+    SDL_Log("%f, %f", gridPos.x, gridPos.y);
+    tile->setPosition(Vector3(gridPos.x,
+                              gridPos.y,
+                              0.0f));
+    
     return true;
 }
 
