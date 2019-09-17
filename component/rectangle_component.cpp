@@ -16,7 +16,7 @@ RectangleComponent::RectangleComponent(Actor* actor,
 
 void RectangleComponent::draw()
 {
-    Vector3 relation(getRelativePosition().x, getRelativePosition().y, 0.0f);
+    Vector3 relation(getPosition().x, getPosition().y, 0.0f);
     Matrix4 worldTransform = Matrix4::createScale(getActor()->getScale()) * Matrix4::createScale(Vector3(getSize().x, getSize().y, 1.0f));
     worldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());
     worldTransform *= Matrix4::createTranslation(getActor()->getPosition() + relation);

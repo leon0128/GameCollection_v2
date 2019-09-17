@@ -193,7 +193,7 @@ void _2048::Setting::loadComponents()
     StringComponent* title = new StringComponent(this,
                                  setting,
                                  titleFont);
-    title->setRelativePosition(settingPos);
+    title->setPosition(settingPos);
     title->setColor(titleColor);
 
     // 属性、属性値
@@ -204,13 +204,13 @@ void _2048::Setting::loadComponents()
 
         StringComponent* string = new StringComponent(this,
                                                       outputString.at(i).first);
-        string->setRelativePosition(position);
+        string->setPosition(position);
         string->setColor(strColor);
 
         position.x = bgSize.x / 4.0f;
         mStrings.emplace_back(new StringComponent(this,
                                                   outputString.at(i).second));
-        mStrings.at(i)->setRelativePosition(position);
+        mStrings.at(i)->setPosition(position);
         mStrings.at(i)->setColor(strColor);
     }
 
@@ -222,7 +222,7 @@ void _2048::Setting::loadComponents()
     mStrings.emplace_back(new StringComponent(this,
                                               start));
     mStrings.back()->setColor(littleRed);
-    mStrings.back()->setRelativePosition(startPos);
+    mStrings.back()->setPosition(startPos);
 
     // mGamepad の設定
     mGamepad = new GamepadComponent(this);

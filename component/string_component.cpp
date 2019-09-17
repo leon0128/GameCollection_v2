@@ -40,7 +40,7 @@ void StringComponent::draw()
     
     for(size_t i = 0; i < mStringTexture.size(); i++)
     {
-        Vector3 relation(offset + getRelativePosition().x, getRelativePosition().y, 0.0f);
+        Vector3 relation(offset + getPosition().x, getPosition().y, 0.0f);
         Matrix4 worldTransform = Matrix4::createScale(getActor()->getScale()) *
                                  Matrix4::createScale(mStringTexture.at(i)->getSize().x, mStringTexture.at(i)->getSize().y, 1.0f);
         worldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());

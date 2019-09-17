@@ -125,7 +125,7 @@ void _2048::Board::loadBoard(Setting* setting)
                                                                frameColor,
                                                                80);
         temp.set(0.0f, space * i - mBaseSize.x / 2.0f);
-        parallel->setRelativePosition(temp);
+        parallel->setPosition(temp);
 
         // 垂直な枠
         temp.set(width, mBaseSize.y);
@@ -134,7 +134,7 @@ void _2048::Board::loadBoard(Setting* setting)
                                                               frameColor,
                                                               80);
         temp.set(space * i - size.x / 2.0f, 0.0f);
-        vertical->setRelativePosition(temp);
+        vertical->setPosition(temp);
     }
 }
 

@@ -65,10 +65,10 @@ void _2048::Tile::updateActor(float deltaTime)
 
     // Vector3 newPos(position.x, position.y, 0.0f);
     // setPosition(newPos);
-    mRectangle->setRelativePosition(position);
+    mRectangle->setPosition(position);
     mRectangle->setColor(COLOR_MAP.at(mScore));
 
-    mString->setRelativePosition(position);
+    mString->setPosition(position);
     mString->setString(std::to_string(static_cast<int>(std::pow(2.0f, mScore))));
 
     float xScale = mOwner->getBaseSize().x /

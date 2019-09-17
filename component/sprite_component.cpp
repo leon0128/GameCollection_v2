@@ -9,8 +9,12 @@ SpriteComponent::SpriteComponent(Actor* actor,
     Component(actor),
     mDrawOrder(drawOrder),
     mScale(1.0f),
+    mClear(1.0f),
     mSize(),
-    mRelativePosition()
+    mPosition(),
+    mRotation(),
+    mWorldTransform(),
+    misRecomputedWorldTransform(true)
 {
     mRenderer = actor->getController()->getGame()->getRenderer();
     mRenderer->addSprite(this);
