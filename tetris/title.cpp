@@ -16,12 +16,12 @@ TETRIS::Title::Title(Controller* controller):
 
 void TETRIS::Title::updateActor(float deltaTime)
 {
-    startAnimation(deltaTime);
+    rectangleAnimation(deltaTime);
 
     mElapsedTime += deltaTime;
 }
 
-void TETRIS::Title::startAnimation(float deltaTime)
+void TETRIS::Title::rectangleAnimation(float deltaTime)
 {
     if(!mIsExecAnimation)
         return;

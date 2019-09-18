@@ -16,8 +16,8 @@ public:
 private:
     void updateActor(float deltaTime) override;
 
-    // 作成時のアニメーション
-    void startAnimation(float deltaTime);
+    // 矩形を使用したアニメーション
+    void rectangleAnimation(float deltaTime);
 
     void loadComponents();
 
