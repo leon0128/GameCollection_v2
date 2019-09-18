@@ -73,6 +73,21 @@ void TETRIS::Title::startAnimation(float deltaTime)
     mSecondRectPair.first->setPosition(secPos);
     secPos.x *= -1;
     mSecondRectPair.second->setPosition(secPos);
+
+    // mSecondRectPair が枠外に出たら削除
+    if(mSecondRectPair.first->getPosition().x - mSecondRectPair.first->getSize().x / 2.0f >
+       Game::SCREEN_WIDTH / 2.0f)
+    {
+        removeComponent(mFirstRectPair.first);
+        removeComponent(mFirstRectPair.second);
+        removeComponent(mSecondRectPair.first);
+        removeComponent(mSecondRectPair.second);
+
+        mFirstRectPair = std::make_pair(nullptr, nullptr);
+        mSecondRectPair = std::make_pair(nullptr, nullptr);
+
+        mIsExecAnimation = false;
+    }
 }
 
 void TETRIS::Title::loadComponents()
