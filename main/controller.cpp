@@ -5,6 +5,7 @@
 
 #include "../title/title.hpp"
 #include "../_2048/_2048.hpp"
+#include "../tetris/tetris.hpp"
 
 Controller::Controller(Game* game):
     mActors(),
@@ -27,6 +28,8 @@ bool Controller::initialize()
                          "image/select");
     mFilePathMap.emplace(_2048,
                          "image/_2048");
+    mFilePathMap.emplace(TETRIS,
+                         "image/tetris");
 
     // mLastTicks の設定
     mLastTicks = SDL_GetTicks();
@@ -153,6 +156,11 @@ void Controller::controllActor()
         case(_2048):
         {
             new _2048::_2048(this);
+            break;
+        }
+        case(TETRIS):
+        {
+            new TETRIS::Tetris(this);
             break;
         }
     }

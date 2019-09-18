@@ -14,7 +14,8 @@ public:
     {
         TITLE,
         SELECT,
-        _2048
+        _2048,
+        TETRIS
     };
 
     explicit Controller(class Game* game);

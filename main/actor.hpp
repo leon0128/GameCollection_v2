@@ -27,7 +27,6 @@ public:
     // メンバ変数の設定、取得
     void setState(EState state){mState = state;}
     EState getState() const {return mState;}
-    const Matrix4& getWorldTransform() const {return mWorldTransform;}
     void setPosition(const Vector3& position){mPosition = position;
                                               mIsRecomputedWorldTransform = true;}
     const Vector3& getPosition() const {return mPosition;}
@@ -62,7 +61,6 @@ private:
 
     class Controller* mController; // Controller クラス
     EState mState;                 // 状態
-    Matrix4 mWorldTransform;       // ワールド空間への座標変換を行う
     Vector3 mPosition;             // Actor の中心座標
     Quaternion mRotation;          // 回転Quaternion
     float mScale;                  // 大きさ(1.0f で100%)

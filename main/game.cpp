@@ -4,8 +4,8 @@
 #include "renderer.hpp"
 
 // 定数
-const float Game::SCREEN_WIDTH = 1024.0f;
-const float Game::SCREEN_HEIGHT = 768.0f;
+const float Game::SCREEN_WIDTH = 1280.0f;
+const float Game::SCREEN_HEIGHT = 720.0f;
 const float Game::FRAME_RATE = 60.0f;
 
 Game::Game():
