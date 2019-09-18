@@ -18,11 +18,12 @@ void TextureComponent::draw()
     if(!mTexture)
         return;
 
-    // ワールド空間に変換
-    Vector3 relation(getPosition().x, getPosition().y, 0.0f);
-    Matrix4 worldTransform = Matrix4::createScale(getActor()->getScale()) * Matrix4::createScale(Vector3(getSize().x, getSize().y, 1.0f));
-    worldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());
-    worldTransform *= Matrix4::createTranslation(getActor()->getPosition() + relation);
+    // ワールド変換行列の更新
+    computeWorldTransform();
+    Matrix4 worldTransform = Matrix4::createScale(getSize().x,
+                                                  getSize().y,
+                                                  0.0f) *
+                             getWorldTransform();
 
     // Shader の設定
     Shader* shader = getRenderer()->getShader(Renderer::TEXTURE);

@@ -37,6 +37,7 @@ protected:
 
     // メンバ変数の設定、取得
     class Renderer* getRenderer() const {return mRenderer;}
+    const Matrix4& getWorldTransform() const {return mWorldTransform;}
 
 private:
     class Renderer* mRenderer; // レンダラー
