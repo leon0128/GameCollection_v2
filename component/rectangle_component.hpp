@@ -8,7 +8,7 @@ class RectangleComponent : public SpriteComponent
 {
 public:
     RectangleComponent(class Actor* actor,
-                       Vector2& size,
+                       const Vector2& size,
                        const SDL_Color& color,
                        int drawOrder = 100);
 

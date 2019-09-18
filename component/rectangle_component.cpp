@@ -4,7 +4,7 @@
 #include "../main/shader.hpp"
 
 RectangleComponent::RectangleComponent(Actor* actor,
-                                       Vector2& size,
+                                       const Vector2& size,
                                        const SDL_Color& color,
                                        int drawOrder):
     SpriteComponent(actor, drawOrder),
