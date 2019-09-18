@@ -16,8 +16,9 @@ public:
 private:
     void updateActor(float deltaTime) override;
 
-    // 矩形を使用したアニメーション
-    void rectangleAnimation(float deltaTime);
+    // 各アニメーション
+    void rectangleAnimation(float deltaTime); // 矩形を使用したアニメーション
+    void logoAnimation(float deltaTime);      // ロゴアニメーション
 
     void loadComponents();
 
@@ -27,8 +28,10 @@ private:
               RectangleComponent*> mFirstRectPair;  // 一回目の柱の矩形
     std::pair<RectangleComponent*,
               RectangleComponent*> mSecondRectPair; // 二回目の柱の矩形
+    TextureComponent* mLogoTexture; // ロゴテクスチャ
 
-    bool mIsExecAnimation; // 開始時のアニメーションを実行しているか
+    bool mIsExecRectAnimation; // rectangleAnimation() の状態
+    bool mIsExecLogoAnimation; // logoAnimation() の状態
 };
 
 };

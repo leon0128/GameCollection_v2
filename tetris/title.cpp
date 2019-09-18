@@ -9,7 +9,9 @@ TETRIS::Title::Title(Controller* controller):
     mFirstRectangle(nullptr),
     mFirstRectPair(std::make_pair(nullptr, nullptr)),
     mSecondRectPair(std::make_pair(nullptr, nullptr)),
-    mIsExecAnimation(true)
+    mLogoTexture(nullptr),
+    mIsExecRectAnimation(true),
+    mIsExecLogoAnimation(true)
 {
     loadComponents();
 }
@@ -17,13 +19,14 @@ TETRIS::Title::Title(Controller* controller):
 void TETRIS::Title::updateActor(float deltaTime)
 {
     rectangleAnimation(deltaTime);
+    logoAnimation(deltaTime);
 
     mElapsedTime += deltaTime;
 }
 
 void TETRIS::Title::rectangleAnimation(float deltaTime)
 {
-    if(!mIsExecAnimation)
+    if(!mIsExecRectAnimation)
         return;
 
     // mFirstRectangle のアニメーションが終わるまでは他のアニメーションは実行しない
@@ -85,9 +88,14 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
 
         mFirstRectPair = std::make_pair(nullptr, nullptr);
         mSecondRectPair = std::make_pair(nullptr, nullptr);
-
-        mIsExecAnimation = false;
+    
+        mIsExecRectAnimation = false;
     }
+}
+
+void TETRIS::Title::logoAnimation(float deltaTime)
+{
+
 }
 
 void TETRIS::Title::loadComponents()
@@ -125,4 +133,15 @@ void TETRIS::Title::loadComponents()
                                                     Vector2(0.0, 
                                                             Game::SCREEN_HEIGHT),
                                                     white);
+
+    // mLogoTexture の設定
+    std::string logoPath("image/tetris/title_logo.png");
+    mLogoTexture = new TextureComponent(this,
+                                        logoPath,
+                                        150);
+    Vector2 logoSize(mLogoTexture->getSize());
+    float scale = Game::SCREEN_WIDTH / 4.0f / logoSize.x;
+    logoSize *= scale;
+    mLogoTexture->setSize(logoSize);
+    mLogoTexture->setScale(0.0f);
 }
