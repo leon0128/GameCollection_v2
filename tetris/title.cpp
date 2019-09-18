@@ -5,7 +5,10 @@
 
 TETRIS::Title::Title(Controller* controller):
     Actor(controller),
+    mElapsedTime(0.0f),
     mFirstRectangle(nullptr),
+    mFirstRectPair(std::make_pair(nullptr, nullptr)),
+    mSecondRectPair(std::make_pair(nullptr, nullptr)),
     mIsExecAnimation(true)
 {
     loadComponents();
@@ -14,6 +17,8 @@ TETRIS::Title::Title(Controller* controller):
 void TETRIS::Title::updateActor(float deltaTime)
 {
     startAnimation(deltaTime);
+
+    mElapsedTime += deltaTime;
 }
 
 void TETRIS::Title::startAnimation(float deltaTime)
@@ -21,9 +26,10 @@ void TETRIS::Title::startAnimation(float deltaTime)
     if(!mIsExecAnimation)
         return;
 
+    // mFirstRectangle のアニメーションが終わるまでは他のアニメーションは実行しない
     if(mFirstRectangle)
     {
-        float distance = Game::SCREEN_WIDTH * deltaTime;
+        float distance = Game::SCREEN_WIDTH * deltaTime * 1.5f;
         Vector2 size(mFirstRectangle->getSize().x - distance,
                      Game::SCREEN_HEIGHT);
         mFirstRectangle->setSize(size);
@@ -32,8 +38,41 @@ void TETRIS::Title::startAnimation(float deltaTime)
             removeComponent(mFirstRectangle);
             mFirstRectangle = nullptr;
         }
+
+        return;
     }
 
+    // アニメーション開始から１秒立つまで待機
+    if(mElapsedTime < 1.0f)
+        return;
+
+    // mFirstRectPair のアニメーション
+    Vector2 firSize(mFirstRectPair.first->getSize());
+    firSize.x += Game::SCREEN_WIDTH / 10.0f * deltaTime * 1.5f;    
+    mFirstRectPair.first->setSize(firSize);
+    mFirstRectPair.second->setSize(firSize);
+
+    Vector2 firPos(mFirstRectPair.first->getPosition());
+    firPos.x += Game::SCREEN_WIDTH * deltaTime * 0.8f;
+    mFirstRectPair.first->setPosition(firPos);
+    firPos.x *= -1;
+    mFirstRectPair.second->setPosition(firPos);
+
+    // アニメーション開始から1.2秒経つまで待機
+    if(mElapsedTime < 1.2f)
+        return;
+
+    // mSecondRectPair のアニメーション
+    Vector2 secSize(mSecondRectPair.first->getSize());
+    secSize.x += Game::SCREEN_WIDTH / 10.0f * deltaTime * 1.5f;
+    mSecondRectPair.first->setSize(secSize);
+    mSecondRectPair.second->setSize(secSize);
+
+    Vector2 secPos(mSecondRectPair.first->getPosition());
+    secPos.x += Game::SCREEN_WIDTH * deltaTime * 0.8f;
+    mSecondRectPair.first->setPosition(secPos);
+    secPos.x *= -1;
+    mSecondRectPair.second->setPosition(secPos);
 }
 
 void TETRIS::Title::loadComponents()
@@ -52,4 +91,23 @@ void TETRIS::Title::loadComponents()
     mFirstRectangle = new RectangleComponent(this,
                                              texture->getSize(),
                                              yellow);
+
+    // mRectPair の設定
+    SDL_Color white = {255, 255, 255, 255};
+    mFirstRectPair.first = new RectangleComponent(this,
+                                                  Vector2(0.0, 
+                                                          Game::SCREEN_HEIGHT),
+                                                  white);
+    mFirstRectPair.second = new RectangleComponent(this,
+                                                   Vector2(0.0, 
+                                                           Game::SCREEN_HEIGHT),
+                                                   white);
+    mSecondRectPair.first = new RectangleComponent(this,
+                                                   Vector2(0.0, 
+                                                           Game::SCREEN_HEIGHT),
+                                                   white);
+    mSecondRectPair.second = new RectangleComponent(this,
+                                                    Vector2(0.0, 
+                                                            Game::SCREEN_HEIGHT),
+                                                    white);
 }
