@@ -7,13 +7,14 @@
 namespace TETRIS
 {
 
-class Tetris : public Actor
+class Title : public Actor
 {
 public:
-    Tetris(class Controller* controller);
-    ~Tetris(){}
+    Title(class Controller* controller);
+    ~Title(){}
 
 private:
+    void loadComponents();
 };
 
 };
