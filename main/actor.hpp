@@ -56,7 +56,6 @@ protected:
 private:
     // update() で呼び出す
     void updateComponents(float deltaTime); // mComponents の更新
-    void computeWorldTransform();           // ワールド変換行列の計算
  
     // メンバ変数
     std::vector<class Component*> mComponents; // 自身の所有するComponent

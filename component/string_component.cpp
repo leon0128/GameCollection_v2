@@ -32,6 +32,7 @@ void StringComponent::draw()
         if(!texture)
             return;
 
+    computeWorldTransform();
     Shader* shader = getActor()->getController()->getGame()->getRenderer()->getShader(Renderer::STRING);
 
 
@@ -40,11 +41,12 @@ void StringComponent::draw()
     
     for(size_t i = 0; i < mStringTexture.size(); i++)
     {
-        Vector3 relation(offset + getPosition().x, getPosition().y, 0.0f);
-        Matrix4 worldTransform = Matrix4::createScale(getActor()->getScale()) *
-                                 Matrix4::createScale(mStringTexture.at(i)->getSize().x, mStringTexture.at(i)->getSize().y, 1.0f);
-        worldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());
-        worldTransform *= Matrix4::createTranslation(getActor()->getPosition() + relation);
+        Matrix4 worldTransform = Matrix4::createScale(mStringTexture.at(i)->getSize().x,
+                                                      mStringTexture.at(i)->getSize().y,
+                                                      0.0f) *
+                                 getWorldTransform() *
+                                 Matrix4::createTranslation(Vector3(offset, 0.0f, 0.0f));
+
 
         offset += mStringTexture.at(i)->getSize().x * getScale();
 
