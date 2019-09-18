@@ -14,7 +14,7 @@ SpriteComponent::SpriteComponent(Actor* actor,
     mPosition(),
     mRotation(),
     mWorldTransform(),
-    misRecomputedWorldTransform(true)
+    mIsRecomputedWorldTransform(true)
 {
     mRenderer = actor->getController()->getGame()->getRenderer();
     mRenderer->addSprite(this);
@@ -23,4 +23,18 @@ SpriteComponent::SpriteComponent(Actor* actor,
 SpriteComponent::~SpriteComponent()
 {
     mRenderer->removeSprite(this);
+}
+
+void SpriteComponent::computeWorldTransform()
+{
+    if(mIsRecomputedWorldTransform ||
+       getActor()->isRecomputedWorldTransform())
+    {
+        mWorldTransform  = Matrix4::createScale(mScale * getActor()->getScale());
+        mWorldTransform *= Matrix4::createFromQuaternion(getActor()->getRotation());
+        mWorldTransform *= Matrix4::createFromQuaternion(mRotation);
+        mWorldTransform *= Matrix4::createTranslation(Vector3(mPosition.x, mPosition.y, 0.0f) + getActor()->getPosition());
+    
+        mIsRecomputedWorldTransform = false;
+    }
 }

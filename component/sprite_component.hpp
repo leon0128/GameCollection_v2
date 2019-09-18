@@ -15,16 +15,28 @@ public:
 
     // メンバ変数の取得
     int getDrawOrder() const {return mDrawOrder;}
-    void setScale(float scale){mScale = scale;}
+    void setScale(float scale){mScale = scale;
+                               mIsRecomputedWorldTransform = true;}
     float getScale() const {return mScale;}
+    void setClear(float clear){mClear = clear;}
+    float getClear() const {return mClear;}
+    void setSize(const Vector2& size){mSize = size;
+                                      mIsRecomputedWorldTransform = true;}
     const Vector2& getSize() const {return mSize;}
-    void setPosition(Vector2& position){mPosition = position;}
+    void setPosition(const Vector2& position){mPosition = position;
+                                              mIsRecomputedWorldTransform = true;}
+    const Vector2& getPosition() const {return mPosition;}
+    void setRotation(const Quaternion& rotation){mRotation = rotation;
+                                                 mIsRecomputedWorldTransform = true;}
+    const Quaternion& getRotation() const {return mRotation;}
 
 protected:
+    // mWorldTransform の再計算
+    // draw() 関数の初めに呼び出すようにする
+    void computeWorldTransform();
+
     // メンバ変数の設定、取得
     class Renderer* getRenderer() const {return mRenderer;}
-    void setSize(const Vector2& size){mSize = size;}
-    const Vector2& getPosition() const {return mPosition;}
 
 private:
     class Renderer* mRenderer; // レンダラー
@@ -36,5 +48,5 @@ private:
     Quaternion mRotation;      // 回転
     Matrix4 mWorldTransform;   // ワールド変換行列
 
-    bool misRecomputedWorldTransform; // mWorldTransform の再計算 
+    bool mIsRecomputedWorldTransform; // mWorldTransform の再計算 
 };
