@@ -31,7 +31,7 @@ void TextureComponent::draw()
     shader->setUniform("uWorldTransform",
                        Shader::MATRIX4,
                        &worldTransform);
-    float alpha = getActor()->getClear();
+    float alpha = getActor()->getClear() * getClear();
     shader->setUniform("uAlpha",
                        Shader::FLOAT,
                        &alpha);

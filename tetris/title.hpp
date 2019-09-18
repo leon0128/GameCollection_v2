@@ -14,7 +14,16 @@ public:
     ~Title(){}
 
 private:
+    void updateActor(float deltaTime) override;
+
+    // 作成時のアニメーション
+    void startAnimation(float deltaTime);
+
     void loadComponents();
+
+    RectangleComponent* mFirstRectangle; // 開始時に画面を覆う矩形
+
+    bool mIsExecAnimation; // 開始時のアニメーションを実行しているか
 };
 
 };
