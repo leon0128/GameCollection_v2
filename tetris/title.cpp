@@ -121,18 +121,25 @@ void TETRIS::Title::logoAnimation(float deltaTime)
     else
         sectionTime += loopSecion;
 
-    if(mElapsedTime < sectionTime)
+    // 各ループ時のスケール変更レート
+    std::array<float, 4> rate = {-0.4f, 0.3f, -0.2f, 0.1f};
+    for(size_t i = 0; i < rate.size(); i++)
     {
-        float scale = mLogoTexture->getScale() - 0.4f * deltaTime / loopSecion;
-        mLogoTexture->setScale(scale);
-    }
-    else
-        sectionTime += loopSecion;
-
-    if(mElapsedTime < sectionTime)
-    {
-        float scale = mLogoTexture->getScale() + 0.2 * deltaTime / loopSecion;
-        mLogoTexture->setScale(scale);
+        if(mElapsedTime < sectionTime)
+        {
+            float scale = mLogoTexture->getScale() + 
+                          rate.at(i) * deltaTime / loopSecion;
+            mLogoTexture->setScale(scale);
+        }
+        else if(i == rate.size() - 1)
+        {
+            mLogoTexture->setScale(1.0f);
+            mIsExecLogoAnimation = false;
+        }
+        else
+        {
+            sectionTime += loopSecion;
+        }
     }
 }
 
