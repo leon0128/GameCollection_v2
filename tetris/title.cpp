@@ -97,7 +97,7 @@ void TETRIS::Title::logoAnimation(float deltaTime)
 {
     // 各アニメーションまでの時間
     float sectionTime = 0.0f;
-    float waitSection = 0.5f;
+    float waitSection = 0.4f;
     float firstSection = 0.05f;
     float loopSecion = 0.15f;
 
