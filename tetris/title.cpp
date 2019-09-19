@@ -46,7 +46,7 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
     }
 
     // アニメーション開始から１秒立つまで待機
-    if(mElapsedTime < 1.0f)
+    if(mElapsedTime < 1.5f)
         return;
 
     // mFirstRectPair のアニメーション
@@ -62,7 +62,7 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
     mFirstRectPair.second->setPosition(firPos);
 
     // アニメーション開始から1.2秒経つまで待機
-    if(mElapsedTime < 1.2f)
+    if(mElapsedTime < 1.7f)
         return;
 
     // mSecondRectPair のアニメーション
@@ -95,7 +95,45 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
 
 void TETRIS::Title::logoAnimation(float deltaTime)
 {
+    // 各アニメーションまでの時間
+    float sectionTime = 0.0f;
+    float waitSection = 0.5f;
+    float firstSection = 0.05f;
+    float loopSecion = 0.15f;
 
+    if(!mIsExecLogoAnimation)
+        return;
+    else
+        sectionTime += waitSection;
+
+    if(mElapsedTime < sectionTime)
+        return;
+    else
+        sectionTime += firstSection;
+    
+    if(mElapsedTime < sectionTime)
+    {
+        float scale = mLogoTexture->getScale() + deltaTime / firstSection;
+        mLogoTexture->setScale(scale);
+
+        return;
+    }
+    else
+        sectionTime += loopSecion;
+
+    if(mElapsedTime < sectionTime)
+    {
+        float scale = mLogoTexture->getScale() - 0.4f * deltaTime / loopSecion;
+        mLogoTexture->setScale(scale);
+    }
+    else
+        sectionTime += loopSecion;
+
+    if(mElapsedTime < sectionTime)
+    {
+        float scale = mLogoTexture->getScale() + 0.2 * deltaTime / loopSecion;
+        mLogoTexture->setScale(scale);
+    }
 }
 
 void TETRIS::Title::loadComponents()
@@ -107,10 +145,10 @@ void TETRIS::Title::loadComponents()
                                                      10);
     texture->setSize(Vector2(Game::SCREEN_WIDTH,
                              Game::SCREEN_HEIGHT));
-    texture->setClear(0.75f);
+    texture->setClear(0.5f);
     
     // mFirstRectangle の設定
-    SDL_Color yellow = {255, 255, 0, 255};
+    SDL_Color yellow = {255, 255, 50, 255};
     mFirstRectangle = new RectangleComponent(this,
                                              texture->getSize(),
                                              yellow);
@@ -140,7 +178,7 @@ void TETRIS::Title::loadComponents()
                                         logoPath,
                                         150);
     Vector2 logoSize(mLogoTexture->getSize());
-    float scale = Game::SCREEN_WIDTH / 4.0f / logoSize.x;
+    float scale = Game::SCREEN_WIDTH / 3.0f / logoSize.x;
     logoSize *= scale;
     mLogoTexture->setSize(logoSize);
     mLogoTexture->setScale(0.0f);
