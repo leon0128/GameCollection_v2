@@ -5,13 +5,15 @@
 
 TETRIS::Title::Title(Controller* controller):
     Actor(controller),
+    mSplashTextures(),
     mElapsedTime(0.0f),
     mFirstRectangle(nullptr),
     mFirstRectPair(std::make_pair(nullptr, nullptr)),
     mSecondRectPair(std::make_pair(nullptr, nullptr)),
     mLogoTexture(nullptr),
     mIsExecRectAnimation(true),
-    mIsExecLogoAnimation(true)
+    mIsExecLogoAnimation(true),
+    mIsExecSplashAnimation(true)
 {
     loadComponents();
 }
@@ -20,6 +22,7 @@ void TETRIS::Title::updateActor(float deltaTime)
 {
     rectangleAnimation(deltaTime);
     logoAnimation(deltaTime);
+    splashAnimation(deltaTime);
 
     mElapsedTime += deltaTime;
 }
@@ -46,7 +49,7 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
     }
 
     // アニメーション開始から１秒立つまで待機
-    if(mElapsedTime < 1.5f)
+    if(mElapsedTime < 1.0f)
         return;
 
     // mFirstRectPair のアニメーション
@@ -62,7 +65,7 @@ void TETRIS::Title::rectangleAnimation(float deltaTime)
     mFirstRectPair.second->setPosition(firPos);
 
     // アニメーション開始から1.2秒経つまで待機
-    if(mElapsedTime < 1.7f)
+    if(mElapsedTime < 1.2f)
         return;
 
     // mSecondRectPair のアニメーション
@@ -143,6 +146,55 @@ void TETRIS::Title::logoAnimation(float deltaTime)
     }
 }
 
+void TETRIS::Title::splashAnimation(float deltaTime)
+{
+    if(!mIsExecSplashAnimation)
+        return;
+    
+    // アニメーション開始時間
+    float waitTime = 0.2f, sectionTime = 0.0f;
+    if(mElapsedTime < waitTime)
+        return;
+    else
+        sectionTime += waitTime;
+
+    std::vector<float> secTimes = {0.0f,
+                                   0.0f,
+                                   0.2f,
+                                   0.0f,
+                                   0.2f,
+                                   0.0f,
+                                   0.1f};
+
+    // 移動距離設定
+    float dist = Game::SCREEN_WIDTH * deltaTime;
+    for(size_t i = 0; i < mSplashTextures.size(); i++)
+    {
+        sectionTime += secTimes.at(i);
+
+        if(mElapsedTime > sectionTime)
+        {
+            Vector2 pos = mSplashTextures.at(i)->getPosition();
+            float rad = 2 * std::acos(mSplashTextures.at(i)->getRotation().w);
+        
+            pos.x += dist * std::cos(rad);
+            pos.y += dist * std::sin(rad);
+
+            mSplashTextures.at(i)->setPosition(pos);
+        }
+        else
+            break;
+    }
+
+    if(mElapsedTime >= 2.0f)
+    {
+        for(auto& texture : mSplashTextures)
+            removeComponent(texture);
+        
+        mIsExecSplashAnimation = false;
+    }
+}
+
 void TETRIS::Title::loadComponents()
 {
     // 背景の設定
@@ -189,4 +241,38 @@ void TETRIS::Title::loadComponents()
     logoSize *= scale;
     mLogoTexture->setSize(logoSize);
     mLogoTexture->setScale(0.0f);
+
+    // mSplashTextures の設定
+    std::vector<std::string> minoPath = {"image/tetris/mino_i.png",
+                                         "image/tetris/mino_o.png",
+                                         "image/tetris/mino_t.png",
+                                         "image/tetris/mino_s.png",
+                                         "image/tetris/mino_z.png",
+                                         "image/tetris/mino_l.png",
+                                         "image/tetris/mino_j.png"};
+    std::vector<float> thetaList = {  0.0f,
+                                    200.0f,
+                                    340.0f,
+                                    180.0f,
+                                    150.0f,
+                                     35.0f,
+                                    220.0f};
+    std::vector<float> scaleList = {2.5f,
+                                    3.0f,
+                                    2.0f,
+                                    2.0f,
+                                    2.0f,
+                                    1.5f,
+                                    1.5f};
+    for(size_t i = 0; i < minoPath.size(); i++)
+    {
+        mSplashTextures.emplace_back(new TextureComponent(this,
+                                                          minoPath.at(i),
+                                                          80));
+        
+        Quaternion rotation = Quaternion::concatenate(mSplashTextures.back()->getRotation(),
+                                                      Quaternion(Vector3::UNIT_Z, thetaList.at(i)));
+        mSplashTextures.back()->setRotation(rotation);
+        mSplashTextures.back()->setScale(scaleList.at(i));
+    }
 }
