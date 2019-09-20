@@ -10,7 +10,7 @@ namespace TETRIS
 class Title : public Actor
 {
 public:
-    Title(class Controller* controller);
+    Title(class Tetris* owner);
     ~Title(){}
 
 private:
@@ -25,7 +25,8 @@ private:
 
     std::vector<TextureComponent*> mSplashTextures; // スプラッシュテクスチャ
 
-    float mElapsedTime; // 経過時間
+    class Tetris* mOwner; // Tetris クラス
+    float mElapsedTime;   // 経過時間
     RectangleComponent* mFirstRectangle; // 開始時に画面を覆う矩形
     std::pair<RectangleComponent*, 
               RectangleComponent*> mFirstRectPair;  // 一回目の柱の矩形

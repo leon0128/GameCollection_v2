@@ -2,10 +2,12 @@
 
 #include "../main/game.hpp"
 #include "../main/controller.hpp"
+#include "tetris.hpp"
 
-TETRIS::Title::Title(Controller* controller):
-    Actor(controller),
+TETRIS::Title::Title(Tetris* owner):
+    Actor(owner->getController()),
     mSplashTextures(),
+    mOwner(owner),
     mElapsedTime(0.0f),
     mFirstRectangle(nullptr),
     mFirstRectPair(std::make_pair(nullptr, nullptr)),
